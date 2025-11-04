@@ -53,6 +53,27 @@ export interface LineStyle {
   width: i32;
 }
 
+export interface Style {
+  fill_color: Color;
+  stroke_color: Color;
+  stroke_width: i32;
+}
+
+/** Create a shape style filled with a color and without a stroke. */
+export function solid(c: Color): Style {
+  return { fill_color: c, stroke_color: Color.None, stroke_width: 0 };
+}
+
+/** Create a shape style with a stroke and no fill color (transparent body). */
+export function outlined(c: Color, w: i32): Style {
+  return { fill_color: Color.None, stroke_color: c, stroke_width: w };
+}
+
+export interface Size {
+  width: i32;
+  height: i32;
+}
+
 /** Fill the whole frame with the given color. */
 export function clearScreen(c: Color): void {
   B.clear_screen(c);
@@ -71,4 +92,9 @@ export function drawPoint(p: Point, c: Color): void {
 /** Draw a straight line from point a to point b. */
 export function drawLine(a: Point, b: Point, s: LineStyle): void {
   B.draw_line(a.x, a.y, b.x, b.y, s.color, s.width);
+}
+
+/** Draw a rectangle filling the given bounding box. */
+export function drawRect(p: Point, b: Size, s: Style): void {
+  B.draw_rect(p.x, p.y, b.width, b.height, s.fill_color, s.stroke_color, s.stroke_width);
 }
