@@ -113,3 +113,21 @@ export function drawRoundedRect(p: Point, b: Size, corner: Size, s: Style): void
     s.stroke_width
   );
 }
+
+/** Draw a circle with the given diameter. */
+export function drawCircle(p: Point, d: i32, s: Style): void {
+  B.draw_circle(p.x, p.y, d, s.fill_color, s.stroke_color, s.stroke_width);
+}
+
+/** Draw an ellipse (oval). */
+export function drawEllipse(p: Point, b: Size, s: Style): void {
+  B.draw_ellipse(
+    p.x,
+    p.y,
+    b.width,
+    b.height,
+    s.fill_color,
+    s.stroke_color,
+    s.stroke_width
+  );
+}
