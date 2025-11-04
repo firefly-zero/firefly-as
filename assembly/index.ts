@@ -1,5 +1,5 @@
-import * as B from "./bindings";
+import * as G from "./graphics";
 
 export function boot(): void {
-  B.clear_screen(4);
+  G.clearScreen(G.Color.Red);
 }
