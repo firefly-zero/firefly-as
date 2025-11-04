@@ -131,3 +131,18 @@ export function drawEllipse(p: Point, b: Size, s: Style): void {
     s.stroke_width
   );
 }
+
+/** Draw a triangle. */
+export function drawTriangle(a: Point, b: Point, c: Point, s: Style): void {
+  B.draw_triangle(
+    a.x,
+    a.y,
+    b.x,
+    b.y,
+    c.x,
+    c.y,
+    s.fill_color,
+    s.stroke_color,
+    s.stroke_width
+  );
+}
