@@ -1,0 +1,14 @@
+{
+  "name": "firefly-as",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Firefly Zero",
+  "license": "MIT",
+  "description": "AssemblyScript SDK for making Firefly Zero games",
+  "devDependencies": {
+    "assemblyscript": "^0.28.9"
+  }
+}
