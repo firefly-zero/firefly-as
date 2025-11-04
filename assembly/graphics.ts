@@ -98,3 +98,18 @@ export function drawLine(a: Point, b: Point, s: LineStyle): void {
 export function drawRect(p: Point, b: Size, s: Style): void {
   B.draw_rect(p.x, p.y, b.width, b.height, s.fill_color, s.stroke_color, s.stroke_width);
 }
+
+/** Draw a rectangle with rounded corners. */
+export function drawRoundedRect(p: Point, b: Size, corner: Size, s: Style): void {
+  B.draw_rounded_rect(
+    p.x,
+    p.y,
+    b.width,
+    b.height,
+    corner.width,
+    corner.height,
+    s.fill_color,
+    s.stroke_color,
+    s.stroke_width
+  );
+}
