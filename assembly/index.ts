@@ -1,5 +1,5 @@
-// The entry file of your WebAssembly module.
+import * as B from "./bindings";
 
-export function add(a: i32, b: i32): i32 {
-  return a + b;
+export function boot(): void {
+  B.clear_screen(4);
 }
