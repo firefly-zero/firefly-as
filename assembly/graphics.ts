@@ -74,6 +74,19 @@ export interface Size {
   height: i32;
 }
 
+export interface Angle {
+  radians: f32;
+}
+
+export function radians(r: f32): Angle {
+  return { radians: r };
+}
+
+export function degrees(d: f32): Angle {
+  let r = (d * f32(Math.PI)) / 180.0;
+  return { radians: r };
+}
+
 /** Fill the whole frame with the given color. */
 export function clearScreen(c: Color): void {
   B.clear_screen(c);
@@ -141,6 +154,34 @@ export function drawTriangle(a: Point, b: Point, c: Point, s: Style): void {
     b.y,
     c.x,
     c.y,
+    s.fill_color,
+    s.stroke_color,
+    s.stroke_width
+  );
+}
+
+/** Draw an arc. */
+export function drawArc(p: Point, d: i32, start: Angle, sweep: Angle, s: Style): void {
+  B.draw_arc(
+    p.x,
+    p.y,
+    d,
+    start.radians,
+    sweep.radians,
+    s.fill_color,
+    s.stroke_color,
+    s.stroke_width
+  );
+}
+
+/** Draw a sector. */
+export function drawSector(p: Point, d: i32, start: Angle, sweep: Angle, s: Style): void {
+  B.draw_sector(
+    p.x,
+    p.y,
+    d,
+    start.radians,
+    sweep.radians,
     s.fill_color,
     s.stroke_color,
     s.stroke_width
