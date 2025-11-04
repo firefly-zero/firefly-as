@@ -48,6 +48,11 @@ export interface Point {
   y: i32;
 }
 
+export interface LineStyle {
+  color: Color;
+  width: i32;
+}
+
 /** Fill the whole frame with the given color. */
 export function clearScreen(c: Color): void {
   B.clear_screen(c);
@@ -61,4 +66,9 @@ export function setColor(c: Color, v: RGB): void {
 /** Set a single point (1 pixel if scaling is 1) on the frame. */
 export function drawPoint(p: Point, c: Color): void {
   B.draw_point(p.x, p.y, c);
+}
+
+/** Draw a straight line from point a to point b. */
+export function drawLine(a: Point, b: Point, s: LineStyle): void {
+  B.draw_line(a.x, a.y, b.x, b.y, s.color, s.width);
 }
