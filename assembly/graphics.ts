@@ -43,6 +43,11 @@ export interface RGB {
   b: i8;
 }
 
+export interface Point {
+  x: i32;
+  y: i32;
+}
+
 /** Fill the whole frame with the given color. */
 export function clearScreen(c: Color): void {
   B.clear_screen(c);
@@ -51,4 +56,9 @@ export function clearScreen(c: Color): void {
 /** Set a color value in the palette. */
 export function setColor(c: Color, v: RGB): void {
   B.set_color(c, v.r, v.g, v.b);
+}
+
+/** Set a single point (1 pixel if scaling is 1) on the frame. */
+export function drawPoint(p: Point, c: Color): void {
+  B.draw_point(p.x, p.y, c);
 }
