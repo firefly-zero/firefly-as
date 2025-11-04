@@ -37,6 +37,18 @@ export enum Color {
   DarkGray = 16,
 }
 
+export interface RGB {
+  r: i8;
+  g: i8;
+  b: i8;
+}
+
+/** Fill the whole frame with the given color. */
 export function clearScreen(c: Color): void {
   B.clear_screen(c);
+}
+
+/** Set a color value in the palette. */
+export function setColor(c: Color, v: RGB): void {
+  B.set_color(c, v.r, v.g, v.b);
 }
