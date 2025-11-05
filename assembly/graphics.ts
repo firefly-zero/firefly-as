@@ -37,54 +37,111 @@ export enum Color {
   DarkGray = 16,
 }
 
-export interface RGB {
+export class RGB {
   r: i8;
   g: i8;
   b: i8;
+
+  constructor(r_: i8, g_: i8, b_: i8) {
+    this.r = r_;
+    this.g = g_;
+    this.b = b_;
+  }
+
+  static new(r: i8, g: i8, b: i8): RGB {
+    return new RGB(r, g, b);
+  }
 }
 
-export interface Point {
+export class Point {
   x: i32;
   y: i32;
+
+  constructor(x_: i32, y_: i32) {
+    this.x = x_;
+    this.y = y_;
+  }
+
+  static new(x: i32, y: i32): Point {
+    return new Point(x, y);
+  }
 }
 
-export interface LineStyle {
+export class LineStyle {
   color: Color;
   width: i32;
+
+  constructor(c: Color, w: i32) {
+    this.color = c;
+    this.width = w;
+  }
+
+  static new(c: Color, w: i32): LineStyle {
+    return new LineStyle(c, w);
+  }
 }
 
-export interface Style {
+export class Style {
   fill_color: Color;
   stroke_color: Color;
   stroke_width: i32;
+
+  constructor(fc: Color, sc: Color, w: i32) {
+    this.fill_color = fc;
+    this.stroke_color = sc;
+    this.stroke_width = w;
+  }
+
+  /** Create a shape style filled with a color and without a stroke. */
+  static solid(c: Color): Style {
+    return new Style(c, Color.None, 0);
+  }
+
+  /** Create a shape style with a stroke and no fill color (transparent body). */
+  static outlined(c: Color, w: i32): Style {
+    return new Style(Color.None, c, w);
+  }
 }
 
-/** Create a shape style filled with a color and without a stroke. */
-export function solid(c: Color): Style {
-  return { fill_color: c, stroke_color: Color.None, stroke_width: 0 };
-}
-
-/** Create a shape style with a stroke and no fill color (transparent body). */
-export function outlined(c: Color, w: i32): Style {
-  return { fill_color: Color.None, stroke_color: c, stroke_width: w };
-}
-
-export interface Size {
+export class Size {
   width: i32;
   height: i32;
+
+  constructor(w: i32, h: i32) {
+    this.width = w;
+    this.height = h;
+  }
+
+  static new(w: i32, h: i32) {
+    return new Size(w, h);
+  }
 }
 
-export interface Angle {
-  radians: f32;
-}
+export class Angle {
+  private r: f32;
 
-export function radians(r: f32): Angle {
-  return { radians: r };
-}
+  constructor(r: f32) {
+    this.r = r;
+  }
 
-export function degrees(d: f32): Angle {
-  let r = (d * f32(Math.PI)) / 180.0;
-  return { radians: r };
+  /** Make an angle in radians where TAU (doubled PI) is the full circle. */
+  static fromRadians(r: f32): Angle {
+    return new Angle(r);
+  }
+
+  /** Make an angle in degrees where 360.0 is the full circle. */
+  static fromDegrees(d: f32): Angle {
+    let r = (d * f32(Math.PI)) / 180.0;
+    return new Angle(r);
+  }
+
+  radians(): f32 {
+    return this.r;
+  }
+
+  degrees(): f32 {
+    return (this.r * 180.0) / f32(Math.PI);
+  }
 }
 
 /** Fill the whole frame with the given color. */
@@ -166,8 +223,8 @@ export function drawArc(p: Point, d: i32, start: Angle, sweep: Angle, s: Style):
     p.x,
     p.y,
     d,
-    start.radians,
-    sweep.radians,
+    start.radians(),
+    sweep.radians(),
     s.fill_color,
     s.stroke_color,
     s.stroke_width
@@ -180,8 +237,8 @@ export function drawSector(p: Point, d: i32, start: Angle, sweep: Angle, s: Styl
     p.x,
     p.y,
     d,
-    start.radians,
-    sweep.radians,
+    start.radians(),
+    sweep.radians(),
     s.fill_color,
     s.stroke_color,
     s.stroke_width
