@@ -1,5 +1,5 @@
 import * as B from "./bindings";
-import { toUtf8, strAddr, strSize } from "./memory";
+import { toUtf8, strAddr, strSize, fromUtf8 } from "./memory";
 
 export function logDebug(t: string): void {
   let utf8 = toUtf8(t);
@@ -17,6 +17,13 @@ export function setSeed(s: u32): void {
 
 export function getRandom(): u32 {
   return B.get_random();
+}
+
+export function getName(): string {
+  let buf = new ArrayBuffer(16);
+  let len: u32 = B.get_name(strAddr(buf), strSize(buf));
+  let name = buf.slice(0, len);
+  return fromUtf8(name);
 }
 
 export function quit(): void {
