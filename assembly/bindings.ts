@@ -153,6 +153,25 @@ export declare function set_canvas(ptr: usize, len: usize): void
 @external("graphics", "unset_canvas")
 export declare function unset_canvas(): void
 
+// -- FS -- //
+
+// @ts-ignore: decorator
+@external("fs", "get_file_size")
+export declare function get_file_size(path_ptr: u32, path_len: u32): u32;
+
+// @ts-ignore: decorator
+@external("fs", "load_file")
+export declare function load_file(path_ptr: u32, path_len: u32, buf_ptr: u32, buf_len: u32): u32;
+
+// @ts-ignore: decorator
+@external("fs", "dump_file")
+export declare function dump_file(path_ptr: u32, path_len: u32, buf_ptr: u32, buf_len: u32): u32;
+
+// @ts-ignore: decorator
+@external("fs", "remove_file")
+export declare function remove_file(path_ptr: u32, path_len: u32): void;
+
+
 // -- INPUT -- //
 
 // @ts-ignore: decorator

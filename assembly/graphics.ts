@@ -131,7 +131,7 @@ export class Angle {
 
   /** Make an angle in degrees where 360.0 is the full circle. */
   static fromDegrees(d: f32): Angle {
-    let r = (d * f32(Math.PI)) / 180.0;
+    const r = (d * f32(Math.PI)) / 180.0;
     return new Angle(r);
   }
 
