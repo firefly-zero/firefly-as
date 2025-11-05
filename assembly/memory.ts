@@ -1,4 +1,4 @@
-type UTF8 = ArrayBuffer;
+export type UTF8 = ArrayBuffer;
 
 export function toUtf8(s: string): UTF8 {
   return String.UTF8.encode(s);

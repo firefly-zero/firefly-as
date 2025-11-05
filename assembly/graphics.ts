@@ -112,7 +112,7 @@ export class Size {
     this.height = h;
   }
 
-  static new(w: i32, h: i32) {
+  static new(w: i32, h: i32): Size {
     return new Size(w, h);
   }
 }
