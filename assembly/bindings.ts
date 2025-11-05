@@ -115,10 +115,10 @@ export declare function draw_sector(
 // @ts-ignore: decorator
 @external("graphics", "draw_text")
 export declare function draw_text(
-    text_ptr: u32,
-    text_len: u32,
-    font_ptr: u32,
-    font_len: u32,
+    text_ptr: usize,
+    text_len: usize,
+    font_ptr: usize,
+    font_len: usize,
     x: i32,
     y: i32,
     color: i32,
@@ -126,13 +126,13 @@ export declare function draw_text(
 
 // @ts-ignore: decorator
 @external("graphics", "draw_qr")
-export declare function draw_qr(ptr: u32, len: u32, x: i32, y: i32, black: i32, white: i32): void
+export declare function draw_qr(ptr: usize, len: usize, x: i32, y: i32, black: i32, white: i32): void
 
 // @ts-ignore: decorator
 @external("graphics", "draw_sub_image")
 export declare function draw_sub_image(
-    ptr: u32,
-    len: u32,
+    ptr: usize,
+    len: usize,
     x: i32,
     y: i32,
     sub_x: i32,
@@ -143,11 +143,11 @@ export declare function draw_sub_image(
 
 // @ts-ignore: decorator
 @external("graphics", "draw_image")
-export declare function draw_image(ptr: u32, len: u32, x: i32, y: i32): void
+export declare function draw_image(ptr: usize, len: usize, x: i32, y: i32): void
 
 // @ts-ignore: decorator
 @external("graphics", "set_canvas")
-export declare function set_canvas(ptr: u32, len: u32): void
+export declare function set_canvas(ptr: usize, len: usize): void
 
 // @ts-ignore: decorator
 @external("graphics", "unset_canvas")
@@ -175,17 +175,17 @@ export declare function get_peers() : u32;
 
 // @ts-ignore: decorator
 @external("net", "save_stash")
-export declare function save_stash(peer: u32, ptr: u32, len: u32): void;
+export declare function save_stash(peer: u32, ptr: usize, len: usize): void;
 
 // @ts-ignore: decorator
 @external("net", "load_stash")
-export declare function load_stash(peer: u32, ptr: u32, len: u32): u32;
+export declare function load_stash(peer: u32, ptr: usize, len: usize): u32;
 
 // -- MENU -- //
 
 // @ts-ignore: decorator
 @external("menu", "add_menu_item")
-export declare function add_menu_item(index: u32, text_ptr: u32, text_len: u32): void
+export declare function add_menu_item(index: u32, text_ptr: usize, text_len: usize): void
 
 // @ts-ignore: decorator
 @external("menu", "remove_menu_item")
@@ -209,11 +209,11 @@ export declare function add_score(peer_id: u32, board_id: u32, new_score: i32) :
 
 // @ts-ignore: decorator
 @external("misc", "log_debug")
-export declare function log_debug(ptr: u32, len: u32): void;
+export declare function log_debug(ptr: usize, len: usize): void;
 
 // @ts-ignore: decorator
 @external("misc", "log_error")
-export declare function log_error(ptr: u32, len: u32): void;
+export declare function log_error(ptr: usize, len: usize): void;
 
 // @ts-ignore: decorator
 @external("misc", "set_seed")
@@ -225,7 +225,7 @@ export declare function get_random() : u32;
 
 // @ts-ignore: decorator
 @external("misc", "get_name")
-export declare function get_name(idx: u32, ptr: u32) : u32;
+export declare function get_name(idx: u32, ptr: usize) : u32;
 
 // @ts-ignore: decorator
 @external("misc", "quit")
