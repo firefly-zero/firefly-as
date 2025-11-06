@@ -4,10 +4,14 @@ import { toUtf8, strAddr, strSize, fromUtf8, UTF8 } from "./memory";
 export type Path = string;
 
 export class File {
-  raw: ArrayBuffer;
+  private raw: ArrayBuffer;
 
   constructor(raw_: ArrayBuffer) {
     this.raw = raw_;
+  }
+
+  toArrayBuffer(): ArrayBuffer {
+    return this.raw;
   }
 }
 
@@ -24,4 +28,14 @@ export function loadFile(path: Path, buf?: ArrayBuffer): File {
   }
   const size = B.load_file(strAddr(utf8), strSize(utf8), strAddr(buf), strSize(buf));
   return new File(buf.slice(0, size));
+}
+
+export function dumpFile(path: Path, raw: ArrayBuffer): void {
+  const utf8 = toUtf8(path);
+  B.dump_file(strAddr(utf8), strSize(utf8), strAddr(raw), strSize(raw));
+}
+
+export function removeFile(path: Path): void {
+  const utf8 = toUtf8(path);
+  B.remove_file(strAddr(utf8), strSize(utf8));
 }
