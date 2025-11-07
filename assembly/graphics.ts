@@ -326,3 +326,8 @@ export function drawSubImage(i: SubImage, p: Point): void {
     i._size.height
   );
 }
+
+export function drawQr(t: string, p: Point, black: Color, white: Color): void {
+  let utf8 = toUtf8(t);
+  B.draw_qr(strAddr(utf8), strSize(utf8), p.x, p.y, black, white);
+}
