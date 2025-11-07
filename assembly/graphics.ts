@@ -1,4 +1,6 @@
 import * as B from "./bindings";
+import { File } from "./fs";
+import { strAddr, strSize } from "./memory";
 
 export enum Color {
   /** No color (100% transparency). */
@@ -144,6 +146,22 @@ export class Angle {
   }
 }
 
+export class Image {
+  private raw: ArrayBuffer;
+
+  constructor(raw_: ArrayBuffer) {
+    this.raw = raw_;
+  }
+
+  static fromFile(file: File): Image {
+    return new Image(file.toArrayBuffer());
+  }
+
+  toArrayBuffer(): ArrayBuffer {
+    return this.raw;
+  }
+}
+
 /** Fill the whole frame with the given color. */
 export function clearScreen(c: Color): void {
   B.clear_screen(c);
@@ -243,4 +261,9 @@ export function drawSector(p: Point, d: i32, start: Angle, sweep: Angle, s: Styl
     s.stroke_color,
     s.stroke_width
   );
+}
+
+export function drawImage(i: Image, p: Point): void {
+  let buf = i.toArrayBuffer();
+  B.draw_image(strAddr(buf), strSize(buf), p.x, p.y);
 }
