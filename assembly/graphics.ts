@@ -162,6 +162,18 @@ export class Image {
   }
 }
 
+export class SubImage {
+  _raw: ArrayBuffer;
+  _point: Point;
+  _size: Size;
+
+  constructor(r: ArrayBuffer, p: Point, s: Size) {
+    this._raw = r;
+    this._point = p;
+    this._size = s;
+  }
+}
+
 export class Font {
   private raw: ArrayBuffer;
 
@@ -175,6 +187,10 @@ export class Font {
 
   toArrayBuffer(): ArrayBuffer {
     return this.raw;
+  }
+
+  sub(p: Point, s: Size): SubImage {
+    return new SubImage(this.raw, p, s);
   }
 }
 
@@ -296,4 +312,17 @@ export function drawText(t: string, f: Font, p: Point, c: Color): void {
 export function drawImage(i: Image, p: Point): void {
   let buf = i.toArrayBuffer();
   B.draw_image(strAddr(buf), strSize(buf), p.x, p.y);
+}
+
+export function drawSubImage(i: SubImage, p: Point): void {
+  B.draw_sub_image(
+    strAddr(i._raw),
+    strSize(i._raw),
+    p.x,
+    p.y,
+    i._point.x,
+    i._point.y,
+    i._size.width,
+    i._size.height
+  );
 }
