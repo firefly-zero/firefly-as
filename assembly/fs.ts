@@ -1,5 +1,5 @@
 import * as B from "./bindings";
-import { Image } from "./graphics";
+import { Font, Image } from "./graphics";
 import { toUtf8, strAddr, strSize, fromUtf8, UTF8 } from "./memory";
 
 export type Path = string;
@@ -17,6 +17,10 @@ export class File {
 
   toImage(): Image {
     return Image.fromFile(this);
+  }
+
+  toFont(): Font {
+    return Font.fromFile(this);
   }
 }
 
