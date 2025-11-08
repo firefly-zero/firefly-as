@@ -51,3 +51,11 @@ export function addProgress(p: Peer, b: Badge, val: i16): Progress {
   const raw = B.add_progress(p._raw, b._raw, val);
   return new Progress(u16(raw >> 16), u16(raw));
 }
+
+export function getScore(p: Peer, b: Badge): i16 {
+  return addScore(p, b, 0);
+}
+
+export function addScore(p: Peer, b: Badge, val: i16): i16 {
+  return B.add_score(p._raw, b._raw, val);
+}
