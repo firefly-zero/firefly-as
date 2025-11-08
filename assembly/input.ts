@@ -12,7 +12,7 @@ export class Pad {
 }
 
 export function readPad(p: Peer): Pad | null {
-  const raw = B.read_pad(p.val);
+  const raw = B.read_pad(p.raw);
   const pressed = raw != 0xffff;
   if (!pressed) {
     return null;
