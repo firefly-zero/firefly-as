@@ -194,6 +194,39 @@ export class Font {
   }
 }
 
+export class Canvas {
+  private raw: ArrayBuffer;
+
+  constructor(s: Size) {
+    const headerSize = 5 + 8;
+    const bodySize = (s.width * s.height) / 2;
+    const raw = new Uint8Array(headerSize + bodySize);
+    raw[0] = 0x21; // magic number
+    raw[1] = 4; // BPP
+    raw[2] = u8(s.width); // width
+    raw[3] = u8(s.width >> 8); // width
+    raw[4] = 255; // transparency
+
+    // color swaps
+    for (let i: u8 = 0; i < u8(8); i++) {
+      raw[5 + i] = ((i * 2) << 4) | (i * 2 + 1);
+    }
+    this.raw = raw;
+  }
+
+  static new(s: Size): Canvas {
+    return new Canvas(s);
+  }
+
+  toArrayBuffer(): ArrayBuffer {
+    return this.raw;
+  }
+
+  toImage(): Image {
+    return new Image(this.raw);
+  }
+}
+
 /** Fill the whole frame with the given color. */
 export function clearScreen(c: Color): void {
   B.clear_screen(c);
@@ -309,6 +342,7 @@ export function drawText(t: string, f: Font, p: Point, c: Color): void {
   );
 }
 
+/** Render an image at the given point. */
 export function drawImage(i: Image, p: Point): void {
   let buf = i.toArrayBuffer();
   B.draw_image(strAddr(buf), strSize(buf), p.x, p.y);
@@ -327,7 +361,22 @@ export function drawSubImage(i: SubImage, p: Point): void {
   );
 }
 
+/** Render a QR code for the given text. */
 export function drawQr(t: string, p: Point, black: Color, white: Color): void {
   let utf8 = toUtf8(t);
   B.draw_qr(strAddr(utf8), strSize(utf8), p.x, p.y, black, white);
+}
+
+/** Set the target image for all subsequent drawing operations. */
+export function setCanvas(c: Canvas): void {
+  const buf = c.toArrayBuffer();
+  B.set_canvas(strAddr(buf), strSize(buf));
+}
+
+/** Make all subsequent drawing operations target the screen instead of a canvas.
+ *
+ * Cancels the effect of setCanvas.
+ */
+export function unsetCanvas(): void {
+  B.unset_canvas();
 }
