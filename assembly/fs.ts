@@ -24,6 +24,10 @@ export class File {
   }
 }
 
+export function fileExists(path: Path): boolean {
+  return getFileSize(path) !== 0;
+}
+
 export function getFileSize(path: Path): u32 {
   const utf8 = toUtf8(path);
   return B.get_file_size(strAddr(utf8), strSize(utf8));
