@@ -1,4 +1,5 @@
 import * as B from "./bindings";
+import { strAddr, strSize } from "./memory";
 
 export class Peer {
   raw: u8;
@@ -45,4 +46,15 @@ export function getMe(): Peer {
 
 export function getPeers(): Peers {
   return new Peers(B.get_peers());
+}
+
+export type Stash = ArrayBuffer;
+
+export function saveStash(p: Peer, s: Stash): void {
+  B.save_stash(p.raw, strAddr(s), strSize(s));
+}
+
+export function loadStash(p: Peer, buf: ArrayBuffer): Stash {
+  const size = B.load_stash(p.raw, strAddr(buf), strSize(buf));
+  return buf.slice(0, size);
 }
