@@ -2,10 +2,10 @@ import * as B from "./bindings";
 import { strAddr, strSize } from "./memory";
 
 export class Peer {
-  raw: u8;
+  _raw: u8;
 
   constructor(v: u8) {
-    this.raw = v;
+    this._raw = v;
   }
 
   static combined(): Peer {
@@ -14,18 +14,18 @@ export class Peer {
 }
 
 export class Peers {
-  raw: u32;
+  _raw: u32;
 
   constructor(v: u32) {
-    this.raw = v;
+    this._raw = v;
   }
 
   length(): i32 {
-    return popcnt(this.raw);
+    return popcnt(this._raw);
   }
 
   contains(peer: Peer): boolean {
-    return ((this.raw >> peer.raw) & 1) !== 0;
+    return ((this._raw >> peer._raw) & 1) !== 0;
   }
 
   toArray(): Peer[] {
@@ -51,10 +51,10 @@ export function getPeers(): Peers {
 export type Stash = ArrayBuffer;
 
 export function saveStash(p: Peer, s: Stash): void {
-  B.save_stash(p.raw, strAddr(s), strSize(s));
+  B.save_stash(p._raw, strAddr(s), strSize(s));
 }
 
 export function loadStash(p: Peer, buf: ArrayBuffer): Stash {
-  const size = B.load_stash(p.raw, strAddr(buf), strSize(buf));
+  const size = B.load_stash(p._raw, strAddr(buf), strSize(buf));
   return buf.slice(0, size);
 }

@@ -5,14 +5,14 @@ import { toUtf8, strAddr, strSize, fromUtf8, UTF8 } from "./memory";
 export type Path = string;
 
 export class File {
-  private raw: ArrayBuffer;
+  private _raw: ArrayBuffer;
 
-  constructor(raw_: ArrayBuffer) {
-    this.raw = raw_;
+  constructor(raw: ArrayBuffer) {
+    this._raw = raw;
   }
 
   toArrayBuffer(): ArrayBuffer {
-    return this.raw;
+    return this._raw;
   }
 
   toImage(): Image {

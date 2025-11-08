@@ -147,18 +147,14 @@ export class Angle {
 }
 
 export class Image {
-  private raw: ArrayBuffer;
+  _raw: ArrayBuffer;
 
-  constructor(raw_: ArrayBuffer) {
-    this.raw = raw_;
+  constructor(raw: ArrayBuffer) {
+    this._raw = raw;
   }
 
   static fromFile(file: File): Image {
     return new Image(file.toArrayBuffer());
-  }
-
-  toArrayBuffer(): ArrayBuffer {
-    return this.raw;
   }
 }
 
@@ -175,27 +171,23 @@ export class SubImage {
 }
 
 export class Font {
-  private raw: ArrayBuffer;
+  _raw: ArrayBuffer;
 
-  constructor(raw_: ArrayBuffer) {
-    this.raw = raw_;
+  constructor(raw: ArrayBuffer) {
+    this._raw = raw;
   }
 
   static fromFile(file: File): Font {
     return new Font(file.toArrayBuffer());
   }
 
-  toArrayBuffer(): ArrayBuffer {
-    return this.raw;
-  }
-
   sub(p: Point, s: Size): SubImage {
-    return new SubImage(this.raw, p, s);
+    return new SubImage(this._raw, p, s);
   }
 }
 
 export class Canvas {
-  private raw: ArrayBuffer;
+  private _raw: ArrayBuffer;
 
   constructor(s: Size) {
     const headerSize = 5 + 8;
@@ -211,7 +203,7 @@ export class Canvas {
     for (let i: u8 = 0; i < u8(8); i++) {
       raw[5 + i] = ((i * 2) << 4) | (i * 2 + 1);
     }
-    this.raw = raw;
+    this._raw = raw;
   }
 
   static new(s: Size): Canvas {
@@ -219,11 +211,11 @@ export class Canvas {
   }
 
   toArrayBuffer(): ArrayBuffer {
-    return this.raw;
+    return this._raw;
   }
 
   toImage(): Image {
-    return new Image(this.raw);
+    return new Image(this._raw);
   }
 }
 
@@ -330,12 +322,11 @@ export function drawSector(p: Point, d: i32, start: Angle, sweep: Angle, s: Styl
 
 export function drawText(t: string, f: Font, p: Point, c: Color): void {
   let utf8 = toUtf8(t);
-  let fontBuf = f.toArrayBuffer();
   B.draw_text(
     strAddr(utf8),
     strSize(utf8),
-    strAddr(fontBuf),
-    strSize(fontBuf),
+    strAddr(f._raw),
+    strSize(f._raw),
     p.x,
     p.y,
     c
@@ -344,7 +335,7 @@ export function drawText(t: string, f: Font, p: Point, c: Color): void {
 
 /** Render an image at the given point. */
 export function drawImage(i: Image, p: Point): void {
-  let buf = i.toArrayBuffer();
+  let buf = i._raw;
   B.draw_image(strAddr(buf), strSize(buf), p.x, p.y);
 }
 

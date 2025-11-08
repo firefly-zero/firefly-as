@@ -36,7 +36,7 @@ function hasBitSet(val: u32, bit: u32): boolean {
 }
 
 export function readPad(p: Peer): Pad | null {
-  const raw = B.read_pad(p.raw);
+  const raw = B.read_pad(p._raw);
   const pressed = raw != 0xffff;
   if (!pressed) {
     return null;
@@ -45,6 +45,6 @@ export function readPad(p: Peer): Pad | null {
 }
 
 export function readButtons(p: Peer): Buttons {
-  const raw = B.read_buttons(p.raw);
+  const raw = B.read_buttons(p._raw);
   return new Buttons(raw);
 }

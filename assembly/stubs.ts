@@ -1,3 +1,4 @@
+// https://www.assemblyscript.org/concepts.html#special-imports
 export function handleAbort(
   message: usize,
   fileName: usize,
