@@ -5,7 +5,7 @@ import { toUtf8, strAddr, strSize, fromUtf8, UTF8 } from "./memory";
 export type Path = string;
 
 export class File {
-  private _raw: ArrayBuffer;
+  private readonly _raw: ArrayBuffer;
 
   constructor(raw: ArrayBuffer) {
     this._raw = raw;

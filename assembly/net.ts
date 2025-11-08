@@ -2,7 +2,7 @@ import * as B from "./bindings";
 import { strAddr, strSize } from "./memory";
 
 export class Peer {
-  _raw: u8;
+  readonly _raw: u8;
 
   constructor(v: u8) {
     this._raw = v;
@@ -14,7 +14,7 @@ export class Peer {
 }
 
 export class Peers {
-  _raw: u32;
+  private readonly _raw: u32;
 
   constructor(v: u32) {
     this._raw = v;

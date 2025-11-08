@@ -1,3 +1,6 @@
+import { Peer } from "./net";
+import * as B from "./bindings";
+
 export class Badge {
   _raw: u8;
 
@@ -38,4 +41,13 @@ export class Progress {
   earned(): boolean {
     return this.done >= this.goal;
   }
+}
+
+export function getProgress(p: Peer, b: Badge): Progress {
+  return addProgress(p, b, 0);
+}
+
+export function addProgress(p: Peer, b: Badge, val: i16): Progress {
+  const raw = B.add_progress(p._raw, b._raw, val);
+  return new Progress(u16(raw >> 16), u16(raw));
 }

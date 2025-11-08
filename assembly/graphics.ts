@@ -147,7 +147,7 @@ export class Angle {
 }
 
 export class Image {
-  _raw: ArrayBuffer;
+  readonly _raw: ArrayBuffer;
 
   constructor(raw: ArrayBuffer) {
     this._raw = raw;
@@ -159,19 +159,19 @@ export class Image {
 }
 
 export class SubImage {
-  _raw: ArrayBuffer;
-  _point: Point;
-  _size: Size;
+  readonly _raw: ArrayBuffer;
+  point: Point;
+  size: Size;
 
   constructor(r: ArrayBuffer, p: Point, s: Size) {
     this._raw = r;
-    this._point = p;
-    this._size = s;
+    this.point = p;
+    this.size = s;
   }
 }
 
 export class Font {
-  _raw: ArrayBuffer;
+  readonly _raw: ArrayBuffer;
 
   constructor(raw: ArrayBuffer) {
     this._raw = raw;
@@ -187,7 +187,7 @@ export class Font {
 }
 
 export class Canvas {
-  private _raw: ArrayBuffer;
+  private readonly _raw: ArrayBuffer;
 
   constructor(s: Size) {
     const headerSize = 5 + 8;
@@ -345,10 +345,10 @@ export function drawSubImage(i: SubImage, p: Point): void {
     strSize(i._raw),
     p.x,
     p.y,
-    i._point.x,
-    i._point.y,
-    i._size.width,
-    i._size.height
+    i.point.x,
+    i.point.y,
+    i.size.width,
+    i.size.height
   );
 }
 
