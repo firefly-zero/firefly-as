@@ -57,5 +57,6 @@ export function getScore(p: Peer, b: Badge): i16 {
 }
 
 export function addScore(p: Peer, b: Badge, val: i16): i16 {
-  return B.add_score(p._raw, b._raw, val);
+  const score = B.add_score(p._raw, b._raw, val);
+  return i16(score);
 }

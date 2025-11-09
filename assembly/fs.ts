@@ -33,7 +33,7 @@ export function getFileSize(path: Path): u32 {
   return B.get_file_size(strAddr(utf8), strSize(utf8));
 }
 
-export function loadFile(path: Path, buf?: ArrayBuffer): File {
+export function loadFile(path: Path, buf: ArrayBuffer | null = null): File {
   const utf8 = toUtf8(path);
   if (!buf) {
     const size = B.get_file_size(strAddr(utf8), strSize(utf8));
