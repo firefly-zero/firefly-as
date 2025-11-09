@@ -1,14 +1,9 @@
 {
-  "name": "firefly-as",
-  "version": "1.0.0",
-  "main": "index.js",
-  "author": "Firefly Zero",
-  "license": "MIT",
+  "type": "module",
   "dependencies": {
     "firefly-as": "file:../../"
   },
   "devDependencies": {
     "assemblyscript": "^0.28.9"
-  },
-  "type": "module"
+  }
 }

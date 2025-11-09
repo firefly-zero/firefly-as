@@ -4,6 +4,12 @@
   "type": "module",
   "author": "Firefly Zero",
   "license": "MIT",
+  "homepage": "https://github.com/firefly-zero/firefly-as",
+  "bugs": "https://github.com/firefly-zero/firefly-as/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firefly-zero/firefly-as.git"
+  },
   "description": "AssemblyScript SDK for making Firefly Zero games",
   "devDependencies": {
     "assemblyscript": "^0.28.9"
