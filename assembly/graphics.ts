@@ -103,6 +103,10 @@ export class Style {
   static outlined(c: Color, w: i32): Style {
     return new Style(Color.None, c, w);
   }
+
+  static new(fill: Color, stroke: Color, stroke_width: i32): Style {
+    return new Style(fill, stroke, stroke_width);
+  }
 }
 
 export class Size {
