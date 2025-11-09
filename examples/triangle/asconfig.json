@@ -1,0 +1,12 @@
+{
+  "options": {
+    "outFile": "main.wasm",
+    "optimizeLevel": 3,
+    "shrinkLevel": 0,
+    "converge": false,
+    "sourceMap": false,
+    "debug": false,
+    "bindings": false,
+    "noAssert": false
+  }
+}

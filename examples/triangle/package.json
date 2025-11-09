@@ -1,11 +1,14 @@
 {
   "name": "firefly-as",
-  "version": "0.1.0",
-  "type": "module",
+  "version": "1.0.0",
+  "main": "index.js",
   "author": "Firefly Zero",
   "license": "MIT",
-  "description": "AssemblyScript SDK for making Firefly Zero games",
+  "dependencies": {
+    "firefly-as": "file:../../"
+  },
   "devDependencies": {
     "assemblyscript": "^0.28.9"
-  }
+  },
+  "type": "module"
 }
