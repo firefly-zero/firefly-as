@@ -150,6 +150,22 @@ ff.dumpFile("save", buf);
 ff.removeFile("save");
 ```
 
+Multiplayer:
+
+```ts
+const peer = ff.getMe();
+
+const peers = getPeers().toArray();
+for (const peer in peers) {
+    // ...
+}
+
+const buf = new Uint8Array(20);
+const stash = ff.loadStash(peer, buf);
+
+ff.saveStash(peer, stash);
+```
+
 ## License
 
 MIT License. You can do whatever you want with the SDK, modify it, embed into any apps and games. Have fun!
