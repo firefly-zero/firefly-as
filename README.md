@@ -166,6 +166,34 @@ const stash = ff.loadStash(peer, buf);
 ff.saveStash(peer, stash);
 ```
 
+Input:
+
+```ts
+const pad = ff.readPad(peer);
+if (pad !== null) {
+    [pad.x, pad.y];
+}
+
+const btns = ff.readButtons(peer);
+if (btns.s || btns.w) {
+    // ...
+}
+```
+
+Misc:
+
+```ts
+ff.logDebug("I'm going back to 505");
+
+ff.logError("Something happened!");
+
+ff.setSeed(13);
+
+const randVal = ff.getRandom();
+
+const name = ff.getName(peer);
+```
+
 ## License
 
 MIT License. You can do whatever you want with the SDK, modify it, embed into any apps and games. Have fun!
