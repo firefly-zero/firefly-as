@@ -102,6 +102,13 @@ ff.drawSector(
     ff.Style.new(ff.Color.LightBlue, ff.Color.DarkBlue, 1)
 );
 
+ff.drawQr(
+    "https://fireflyzero.com/",
+    ff.Point.new(50, 20),
+    ff.Color.Black,
+    ff.Color.White,
+);
+
 const font = ff.must(ff.loadFile("font")).toFont();
 ff.drawText(
     "oh hi mark",
@@ -110,7 +117,37 @@ ff.drawText(
     ff.Color.DarkGray,
 );
 
-// ...
+const img = ff.must(ff.loadFile("cat")).toImage();
+ff.drawImage(img, ff.Point.new(50, 20));
+
+const sub = img.sub(ff.Point.new(8, 0), ff.Size.new(8, 8));
+ff.drawSubImage(sub, ff.Point.new(50, 20));
+
+const canvas = ff.Canvas.new(ff.Size.new(60, 60));
+ff.setCanvas(canvas);
+ff.clearScreen(ff.Color.Red);
+ff.unsetCanvas();
+```
+
+Files:
+
+```ts
+if (ff.fileExists("img")) {
+    // ...
+}
+
+const fileSize = ff.getFileSize("img");
+
+
+const file = ff.loadFile("img");
+if (file !== null) {
+    // ...
+}
+
+const buf = new Uint8Array(20);
+ff.dumpFile("save", buf);
+
+ff.removeFile("save");
 ```
 
 ## License
