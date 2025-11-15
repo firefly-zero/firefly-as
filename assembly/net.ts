@@ -54,7 +54,10 @@ export function saveStash(p: Peer, s: Stash): void {
   B.save_stash(p._raw, strAddr(s), strSize(s));
 }
 
-export function loadStash(p: Peer, buf: ArrayBuffer): Stash {
+export function loadStash(p: Peer, buf: ArrayBuffer): Stash | null {
   const size = B.load_stash(p._raw, strAddr(buf), strSize(buf));
+  if (size === 0) {
+    return null;
+  }
   return buf.slice(0, size);
 }

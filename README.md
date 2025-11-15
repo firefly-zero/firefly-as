@@ -163,7 +163,9 @@ for (const peer in peers) {
 const buf = new Uint8Array(20);
 const stash = ff.loadStash(peer, buf);
 
-ff.saveStash(peer, stash);
+if (stash !== null) {
+    ff.saveStash(peer, stash);
+}
 ```
 
 Input:
