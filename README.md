@@ -195,16 +195,16 @@ ff.openMenu();
 Boards (scoreboards) and badges (achievements):
 
 ```ts
-const BADGE_1: Badge = ff.Badge.new(1);
-const BADGE_2: Badge = ff.Badge.new(2);
+const BADGE_1 = ff.Badge.new(1);
+const BADGE_2 = ff.Badge.new(2);
 
 let progress = ff.getProgress(peer, BADGE_1);
 [progress.done, progress.goal];
 
 progress = ff.addProgress(peer, BADGE_1, 100);
 
-const BOARD_1 = 1;
-const BOARD_2 = 2;
+const BOARD_1 = ff.Board.new(1);
+const BOARD_2 = ff.Board.new(2);
 
 let bestScore = firefly.getScore(peer, BOARD_1);
 
