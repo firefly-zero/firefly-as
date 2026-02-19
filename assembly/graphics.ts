@@ -160,6 +160,10 @@ export class Image {
   static fromFile(file: File): Image {
     return new Image(file.toArrayBuffer());
   }
+
+  sub(p: Point, s: Size): SubImage {
+    return new SubImage(this._raw, p, s);
+  }
 }
 
 export class SubImage {
@@ -184,29 +188,19 @@ export class Font {
   static fromFile(file: File): Font {
     return new Font(file.toArrayBuffer());
   }
-
-  sub(p: Point, s: Size): SubImage {
-    return new SubImage(this._raw, p, s);
-  }
 }
 
 export class Canvas {
   private readonly _raw: ArrayBuffer;
 
   constructor(s: Size) {
-    const headerSize = 5 + 8;
+    const headerSize = 4;
     const bodySize = (s.width * s.height) / 2;
     const raw = new Uint8Array(headerSize + bodySize);
-    raw[0] = 0x21; // magic number
-    raw[1] = 4; // BPP
-    raw[2] = u8(s.width); // width
-    raw[3] = u8(s.width >> 8); // width
-    raw[4] = 255; // transparency
-
-    // color swaps
-    for (let i: u8 = 0; i < u8(8); i++) {
-      raw[5 + i] = ((i * 2) << 4) | (i * 2 + 1);
-    }
+    raw[0] = 0x22; // magic number
+    raw[1] = u8(s.width); // width
+    raw[2] = u8(s.width >> 8); // width
+    raw[3] = 0xff; // transparency
     this._raw = raw;
   }
 
@@ -259,7 +253,7 @@ export function drawRoundedRect(p: Point, b: Size, corner: Size, s: Style): void
     corner.height,
     s.fill_color,
     s.stroke_color,
-    s.stroke_width
+    s.stroke_width,
   );
 }
 
@@ -277,7 +271,7 @@ export function drawEllipse(p: Point, b: Size, s: Style): void {
     b.height,
     s.fill_color,
     s.stroke_color,
-    s.stroke_width
+    s.stroke_width,
   );
 }
 
@@ -292,7 +286,7 @@ export function drawTriangle(a: Point, b: Point, c: Point, s: Style): void {
     c.y,
     s.fill_color,
     s.stroke_color,
-    s.stroke_width
+    s.stroke_width,
   );
 }
 
@@ -306,7 +300,7 @@ export function drawArc(p: Point, d: i32, start: Angle, sweep: Angle, s: Style):
     sweep.radians(),
     s.fill_color,
     s.stroke_color,
-    s.stroke_width
+    s.stroke_width,
   );
 }
 
@@ -320,7 +314,7 @@ export function drawSector(p: Point, d: i32, start: Angle, sweep: Angle, s: Styl
     sweep.radians(),
     s.fill_color,
     s.stroke_color,
-    s.stroke_width
+    s.stroke_width,
   );
 }
 
@@ -333,7 +327,7 @@ export function drawText(t: string, f: Font, p: Point, c: Color): void {
     strSize(f._raw),
     p.x,
     p.y,
-    c
+    c,
   );
 }
 
@@ -352,7 +346,7 @@ export function drawSubImage(i: SubImage, p: Point): void {
     i.point.x,
     i.point.y,
     i.size.width,
-    i.size.height
+    i.size.height,
   );
 }
 
