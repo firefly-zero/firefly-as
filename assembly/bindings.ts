@@ -247,5 +247,9 @@ export declare function get_random() : u32;
 export declare function get_name(idx: u32, ptr: usize) : u32;
 
 // @ts-ignore: decorator
+@external("misc", "get_settings")
+export declare function get_settings(idx: u32) : u64;
+
+// @ts-ignore: decorator
 @external("misc", "quit")
 export declare function quit(): void;
