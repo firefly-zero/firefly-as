@@ -1,6 +1,36 @@
 import * as B from "./bindings";
 import { toUtf8, strAddr, strSize, fromUtf8 } from "./memory";
 import { Peer } from "./net";
+import { Color } from "./graphics";
+
+export enum Language {
+  /** en 🇬🇧 💂 */
+  English = 0x656e,
+  /** nl 🇳🇱 🧀 */
+  Dutch = 0x6e6c,
+  /** fr 🇫🇷 🥐 */
+  French = 0x6672,
+  /** de 🇩🇪 🥨 */
+  German = 0x6465,
+  /** it 🇮🇹 🍕 */
+  Italian = 0x6974,
+  /** pl 🇵🇱 🥟 */
+  Polish = 0x706c,
+  /** ro 🇷🇴 🧛 */
+  Romanian = 0x726f,
+  /** ru 🇷🇺 🪆 */
+  Russian = 0x7275,
+  /** es 🇪🇸 🐂 */
+  Spanish = 0x6573,
+  /** sv 🇸🇪 ❄️ */
+  Swedish = 0x7376,
+  /** tr 🇹🇷 🕌 */
+  Turkish = 0x7472,
+  /** uk 🇺🇦 ✊ */
+  Ukrainian = 0x756b,
+  /** tp 🇨🇦 🙂 */
+  TokiPona = 0x7470,
+}
 
 export function logDebug(t: string): void {
   const utf8 = toUtf8(t);
