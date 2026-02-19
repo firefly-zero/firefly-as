@@ -32,6 +32,26 @@ export enum Language {
   TokiPona = 0x7470,
 }
 
+export class Theme {
+  readonly id: u8;
+  // The main color of text and boxes.
+  readonly primary: Color;
+  // The color of disable options, muted text, etc.
+  readonly secondary: Color;
+  // The color of important elements, active options, etc.
+  readonly accent: Color;
+  // The background color, the most contrast color to primary.
+  readonly bg: Color;
+
+  constructor(i: u8, p: Color, s: Color, a: Color, b: Color) {
+    this.id = i;
+    this.primary = p;
+    this.secondary = s;
+    this.accent = a;
+    this.bg = b;
+  }
+}
+
 export function logDebug(t: string): void {
   const utf8 = toUtf8(t);
   B.log_debug(strAddr(utf8), strSize(utf8));
