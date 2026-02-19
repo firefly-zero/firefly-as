@@ -34,13 +34,13 @@ export enum Language {
 
 export class Theme {
   readonly id: u8;
-  // The main color of text and boxes.
+  /** The main color of text and boxes. */
   readonly primary: Color;
-  // The color of disable options, muted text, etc.
+  /** The color of disable options, muted text, etc. */
   readonly secondary: Color;
-  // The color of important elements, active options, etc.
+  /** The color of important elements, active options, etc. */
   readonly accent: Color;
-  // The background color, the most contrast color to primary.
+  /** The background color, the most contrast color to primary. */
   readonly bg: Color;
 
   constructor(i: u8, p: Color, s: Color, a: Color, b: Color) {
@@ -49,6 +49,45 @@ export class Theme {
     this.secondary = s;
     this.accent = a;
     this.bg = b;
+  }
+}
+
+export class Settings {
+  /** The preferred color scheme of the player. */
+  readonly theme: Theme;
+
+  /** The configured interface language. */
+  readonly language: Language;
+
+  /**  If true, the screen is rotated 180 degrees.
+   *
+   * In other words, the player holds the device upside-down.
+   * The touchpad is now on the right and the buttons are on the left.
+   */
+  readonly rotate_screen: bool;
+
+  /** The player has photosensitivity. The app should avoid any rapid flashes. */
+  readonly reduce_flashing: bool;
+
+  /** The player wants increased contrast for colors.
+   *
+   * If set, the black and white colors in the default
+   * palette are adjusted automatically. All other colors
+   * in the default palette or all colors in a custom palette
+   * should be adjusted by the app.
+   */
+  readonly contrast: bool;
+
+  /** If true, the player wants to see easter eggs, holiday effects, and weird jokes. */
+  readonly easter_eggs: bool;
+
+  constructor(t: Theme, l: Language, rs: bool, rf: bool, c: bool, ee: bool) {
+    this.theme = t;
+    this.language = l;
+    this.rotate_screen = rs;
+    this.reduce_flashing = rf;
+    this.contrast = c;
+    this.easter_eggs = ee;
   }
 }
 
