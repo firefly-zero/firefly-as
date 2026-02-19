@@ -116,6 +116,32 @@ export function getName(peer: Peer): string {
   return fromUtf8(name);
 }
 
+export function getSettings(peer: Peer): Settings {
+  const raw = B.get_settings(peer._raw);
+  const language: Language = i32(u16(raw));
+  const flags = u8(raw >> 16);
+  const rawTheme = u32(raw >> 32);
+  const theme = new Theme(
+    u8(rawTheme),
+    _parseColor(rawTheme >> 20),
+    _parseColor(rawTheme >> 16),
+    _parseColor(rawTheme >> 12),
+    _parseColor(rawTheme >> 8),
+  );
+  return new Settings(
+    theme,
+    language,
+    (flags & 0b0001) != 0,
+    (flags & 0b0010) != 0,
+    (flags & 0b0100) != 0,
+    (flags & 0b1000) != 0,
+  );
+}
+
+function _parseColor(c: u64): Color {
+  return (u8(c) & 0xf) + 1;
+}
+
 export function quit(): void {
   B.quit();
 }
