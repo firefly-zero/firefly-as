@@ -2,6 +2,3 @@ author_id = "demo"
 app_id = "as-triangle"
 author_name = "Demo"
 app_name = "Triangle demo (AS)"
-
-[files]
-_bin = { path = "main.wasm", copy = true }
