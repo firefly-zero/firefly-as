@@ -6,6 +6,9 @@ tasks:
     desc: build and publish release
     cmds:
       - test {{.CLI_ARGS}}
+      - test {{.TOKEN}}
+      # https://www.npmjs.com/settings/orsinium/tokens/
+      - npm config set //registry.npmjs.org/:_authToken {{.TOKEN}}
       - grep -F '"{{.CLI_ARGS}}"' package.json
       - npm publish
       - git tag {{.CLI_ARGS}}
