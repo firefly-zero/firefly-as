@@ -1,11 +1,37 @@
 import * as B from "./audio_bindings";
 import { toUtf8, strAddr, strSize } from "./memory";
 
+export const SAMPLE_RATE = 44_100;
+
 export class Freq {
-  h: f32;
+  readonly _h: f32;
 
   constructor(hz: f32) {
-    this.h = hz;
+    this._h = hz;
+  }
+
+  static hz(hz: f32): Freq {
+    return new Freq(hz);
+  }
+}
+
+export class Time {
+  readonly _s: u32;
+
+  constructor(s: u32) {
+    this._s = s;
+  }
+
+  static samples(hz: u32): Time {
+    return new Time(hz);
+  }
+
+  static seconds(s: u32): Time {
+    return new Time(s / SAMPLE_RATE);
+  }
+
+  static ms(ms: u32): Time {
+    return new Time((ms * 1000) / SAMPLE_RATE);
   }
 }
 
@@ -25,25 +51,25 @@ export class SourceNode {
 export class Node extends SourceNode {
   /** Add sine wave oscillator source (`∿`). */
   addSine(f: Freq, phase: f32): Sine {
-    let id = B.add_sine(this.id, f.h, phase);
+    let id = B.add_sine(this.id, f._h, phase);
     return new Sine(id);
   }
 
   /** Add square wave oscillator source (`⎍`). */
   addSquare(f: Freq, phase: f32): Square {
-    let id = B.add_square(this.id, f.h, phase);
+    let id = B.add_square(this.id, f._h, phase);
     return new Square(id);
   }
 
   /** Add sawtooth wave oscillator source (`╱│`). */
   addSawtooth(f: Freq, phase: f32): Sawtooth {
-    let id = B.add_sawtooth(this.id, f.h, phase);
+    let id = B.add_sawtooth(this.id, f._h, phase);
     return new Sawtooth(id);
   }
 
   /** Add triangle wave oscillator source (`╱╲`). */
   addTriangle(f: Freq, phase: f32): Triangle {
-    let id = B.add_triangle(this.id, f.h, phase);
+    let id = B.add_triangle(this.id, f._h, phase);
     return new Triangle(id);
   }
 
@@ -128,13 +154,13 @@ export class Node extends SourceNode {
 
   /** Add lowpass filter node. */
   addLowPass(freq: Freq, q: f32): LowPass {
-    let id = B.add_low_pass(this.id, freq.h, q);
+    let id = B.add_low_pass(this.id, freq._h, q);
     return new LowPass(id);
   }
 
   /** Add highpass filter node. */
   addHighPass(freq: Freq, q: f32): HighPass {
-    let id = B.add_high_pass(this.id, freq.h, q);
+    let id = B.add_high_pass(this.id, freq._h, q);
     return new HighPass(id);
   }
 
