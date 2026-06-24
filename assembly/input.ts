@@ -1,6 +1,7 @@
 import * as B from "./bindings";
 import { Peer } from "./net";
 
+@final
 export class Pad {
   x: i16;
   y: i16;
@@ -11,6 +12,7 @@ export class Pad {
   }
 }
 
+@final
 export class Buttons {
   s: boolean;
   e: boolean;

@@ -1,6 +1,7 @@
 import { Peer } from "./net";
 import * as B from "./bindings";
 
+@final
 export class Badge {
   _raw: u8;
 
@@ -13,6 +14,7 @@ export class Badge {
   }
 }
 
+@final
 export class Board {
   _raw: u8;
 
@@ -25,6 +27,7 @@ export class Board {
   }
 }
 
+@final
 export class Progress {
   done: u16;
   goal: u16;

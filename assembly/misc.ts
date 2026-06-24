@@ -32,6 +32,7 @@ export enum Language {
   TokiPona = 0x7470,
 }
 
+@final
 export class Theme {
   readonly id: u8;
   /** The main color of text and boxes. */
@@ -52,6 +53,7 @@ export class Theme {
   }
 }
 
+@final
 export class Settings {
   /** The preferred color scheme of the player. */
   readonly theme: Theme;

@@ -4,6 +4,7 @@ import { toUtf8, strAddr, strSize } from "./memory";
 
 export type Path = string;
 
+@final
 export class File {
   private readonly _raw: ArrayBuffer;
 

@@ -39,6 +39,7 @@ export enum Color {
   DarkGray = 16,
 }
 
+@final
 export class RGB {
   r: i8;
   g: i8;
@@ -55,6 +56,7 @@ export class RGB {
   }
 }
 
+@final
 export class Point {
   x: i32;
   y: i32;
@@ -69,6 +71,7 @@ export class Point {
   }
 }
 
+@final
 export class LineStyle {
   color: Color;
   width: i32;
@@ -83,6 +86,7 @@ export class LineStyle {
   }
 }
 
+@final
 export class Style {
   fill_color: Color;
   stroke_color: Color;
@@ -109,6 +113,7 @@ export class Style {
   }
 }
 
+@final
 export class Size {
   width: i32;
   height: i32;
@@ -123,6 +128,7 @@ export class Size {
   }
 }
 
+@final
 export class Angle {
   private r: f32;
 
@@ -150,6 +156,7 @@ export class Angle {
   }
 }
 
+@final
 export class Image {
   readonly _raw: ArrayBuffer;
 
@@ -166,6 +173,7 @@ export class Image {
   }
 }
 
+@final
 export class SubImage {
   readonly _raw: ArrayBuffer;
   point: Point;
@@ -178,6 +186,7 @@ export class SubImage {
   }
 }
 
+@final
 export class Font {
   readonly _raw: ArrayBuffer;
 
@@ -190,6 +199,7 @@ export class Font {
   }
 }
 
+@final
 export class Canvas {
   private readonly _raw: ArrayBuffer;
 
