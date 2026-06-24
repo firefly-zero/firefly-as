@@ -1,5 +1,5 @@
-import * as B from "./audio_bindings";
-import { toUtf8, strAddr, strSize } from "./memory";
+import * as B from "./_audio_bindings";
+import { toUtf8, strAddr, strSize } from "./_memory";
 
 export const SAMPLE_RATE = 44_100;
 

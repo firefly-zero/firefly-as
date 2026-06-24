@@ -1,5 +1,5 @@
-import * as B from "./bindings";
-import { strAddr, strSize } from "./memory";
+import * as B from "./_bindings";
+import { strAddr, strSize } from "./_memory";
 
 @final
 export class Peer {

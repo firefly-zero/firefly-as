@@ -1,5 +1,5 @@
-import * as B from "./bindings";
-import { Peer } from "./net";
+import * as B from "./_bindings";
+import { Peer } from "./_net";
 
 @final
 export class Pad {

@@ -1,6 +1,6 @@
-import * as B from "./bindings";
-import { Font, Image } from "./graphics";
-import { toUtf8, strAddr, strSize } from "./memory";
+import * as B from "./_bindings";
+import { Font, Image } from "./_graphics";
+import { toUtf8, strAddr, strSize } from "./_memory";
 
 export type Path = string;
 

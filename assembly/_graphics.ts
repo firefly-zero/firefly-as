@@ -1,6 +1,6 @@
-import * as B from "./bindings";
-import { File } from "./fs";
-import { strAddr, strSize, toUtf8 } from "./memory";
+import * as B from "./_bindings";
+import { File } from "./_fs";
+import { strAddr, strSize, toUtf8 } from "./_memory";
 
 export enum Color {
   /** No color (100% transparency). */
