@@ -250,3 +250,9 @@ export class TakeRight extends Node {}
 export class Swap extends Node {}
 @final
 export class Clip extends Node {}
+
+@final
+class Out extends Node {}
+
+/** The root audio node. */
+export const OUT = new Out(0);
