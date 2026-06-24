@@ -27,11 +27,60 @@ export class Time {
   }
 
   static seconds(s: u32): Time {
-    return new Time(s / SAMPLE_RATE);
+    return new Time(s * SAMPLE_RATE);
   }
 
   static ms(ms: u32): Time {
-    return new Time((ms * 1000) / SAMPLE_RATE);
+    return new Time((ms * SAMPLE_RATE) / 1000);
+  }
+}
+
+/** Modulator can be attached to a node to change a node parameter over time.
+ *
+ * Modulators include both LFOs (Low-Frequency Oscillator) and envelopes.
+ * The difference is that LFOs keep oscillating between values
+ * while envelopes go from one value to another and then stop.
+ *
+ * Internally, modulators only produce values from 0 to 1.
+ * Then, to get the final value of the parameter,
+ * the value from the modulator is projected on the range
+ * between `low` and `high` arguments passed together
+ * with the modulator when attaching a modulator to a node.
+ * For example, [`Node<Sine>::modulate`] accepts the range of modulated values
+ * for the sine wave frequency (which can be used for vibrato effect).
+ *
+ * Even if a node has multiple parameters that can be modulated,
+ * currently  single node may have at most one modulator attached.
+ */
+export interface Modulator {
+  modulate(nodeID: u32, param: u32, low: f32, high: f32): void;
+}
+
+/**  Linear (ramp up or down) envelope.
+ *
+ * It looks like this: `⎽╱⎺` (or `⎺╲⎽` if `low` is bigger than `high`).
+ *
+ * The value before `start_at` is 0, the value after `end_at` is 1,
+ * and the value between `start_at` and `end_at` changes linearly from 0 to 1.
+ *
+ * Most often used with [`Gain`] for fade in and fade out effect.
+ */
+@final
+export class LinearModulator implements Modulator {
+  private startAt: Time;
+  private endAt: Time;
+
+  constructor(start: Time, end: Time) {
+    this.startAt = start;
+    this.endAt = end;
+  }
+
+  static new(startAt: Time, endAt: Time): LinearModulator {
+    return new LinearModulator(startAt, endAt);
+  }
+
+  modulate(nodeID: u32, param: u32, low: f32, high: f32): void {
+    B.mod_linear(nodeID, param, low, high, this.startAt._s, this.endAt._s);
   }
 }
 
@@ -225,7 +274,11 @@ export class Mix extends Node {}
 @final
 export class AllForOne extends Node {}
 @final
-export class Gain extends Node {}
+export class Gain extends Node {
+  modulate(low: f32, high: f32, mod: Modulator): void {
+    mod.modulate(this.id, 0, low, high);
+  }
+}
 @final
 export class Loop extends Node {}
 @final
