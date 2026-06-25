@@ -53,7 +53,7 @@ export class Time {
  * currently  single node may have at most one modulator attached.
  */
 export interface Modulator {
-  modulate(nodeID: u32, param: u32, low: f32, high: f32): void;
+  modulate(nodeId: u32, param: u32, low: f32, high: f32): void;
 }
 
 /**  Linear (ramp up or down) envelope.
@@ -79,8 +79,156 @@ export class LinearModulator implements Modulator {
     return new LinearModulator(startAt, endAt);
   }
 
-  modulate(nodeID: u32, param: u32, low: f32, high: f32): void {
-    B.mod_linear(nodeID, param, low, high, this.startAt._s, this.endAt._s);
+  modulate(nodeId: u32, param: u32, low: f32, high: f32): void {
+    B.mod_linear(nodeId, param, low, high, this.startAt._s, this.endAt._s);
+  }
+}
+
+/** Hold envelope.
+ *
+ * It looks like this: `⎽│⎺` (or `⎺│⎽` if `low` is bigger than `high`).
+ *
+ * The value before `time` is 0 and the value after `time` is 1.
+ * Equivalent to [`LinearModulator`] with `start_at` being equal to `end_at`.
+ */
+@final
+export class HoldModulator implements Modulator {
+  private time: Time;
+
+  constructor(t: Time) {
+    this.time = t;
+  }
+
+  static new(time: Time): HoldModulator {
+    return new HoldModulator(time);
+  }
+
+  modulate(nodeId: u32, param: u32, low: f32, high: f32) {
+    B.mod_hold(nodeId, param, low, high, this.time._s);
+  }
+}
+
+/** ADSR envelope.
+ *
+ * It looks like this: `🭋🭍🬹🬿`
+ *
+ *  1. Until `attack`, the value goes from 0 to 1;
+ *  2. Until `decay`, it goes from 1 to `sustain_level`;
+ *  3. Until `sustain`, it holds `sustain_level`;
+ *  4. Until `release`, it goes from `sustain_level` to 0;
+ *  5. After `release`, it holds 0.
+ *
+ * Most commonly used with [`Gain`].
+ */
+@final
+export class AdsrModulator implements Modulator {
+  /** When the value reaches 1. */
+  private attack: Time;
+  /** When the value reaches `sustain_level`. */
+  private decay: Time;
+  /** Until when the value holds `sustain_level`. */
+  private sustain: Time;
+  /** The value generated from `decay` until `sustain`. */
+  private sustain_level: f32;
+  /** When the value drops to 0. */
+  private release: Time;
+
+  constructor(a: Time, d: Time, s: Time, sl: f32, r: Time) {
+    this.attack = a;
+    this.decay = d;
+    this.sustain = s;
+    this.sustain_level = sl;
+    this.release = r;
+  }
+
+  static new(
+    attack: Time,
+    decay: Time,
+    sustain: Time,
+    sustain_level: f32,
+    release: Time,
+  ): AdsrModulator {
+    return new AdsrModulator(attack, decay, sustain, sustain_level, release);
+  }
+
+  modulate(nodeId: u32, param: u32, low: f32, high: f32) {
+    B.mod_adsr(
+      nodeId,
+      param,
+      low,
+      high,
+      this.attack._s,
+      this.decay._s,
+      this.sustain._s,
+      this.sustain_level,
+      this.release._s,
+    );
+  }
+}
+
+/** Sine wave low-frequency oscillator.
+ *
+ * It looks like this: `∿`.
+ *
+ * Most commonly used with [`Sine`] (or another wave generator)
+ * to produce vibrato effect.
+ */
+@final
+export class SineModulator implements Modulator {
+  private freq: Freq;
+
+  constructor(f: Freq) {
+    this.freq = f;
+  }
+
+  static new(f: Freq): SineModulator {
+    return new SineModulator(f);
+  }
+
+  modulate(nodeId: u32, param: u32, low: f32, high: f32) {
+    B.mod_sine(nodeId, param, this.freq._h, low, high);
+  }
+}
+
+/** Square wave low-frequency oscillator.
+ *
+ * It looks like this: `🭿🭾🭿🭾🭿🭾🭿🭾`.
+ */
+@final
+export class SquareModulator implements Modulator {
+  private period: Time;
+
+  constructor(p: Time) {
+    this.period = p;
+  }
+
+  static new(period: Time): SquareModulator {
+    return new SquareModulator(period);
+  }
+
+  modulate(nodeId: u32, param: u32, low: f32, high: f32) {
+    B.mod_square(nodeId, param, low, high, this.period._s);
+  }
+}
+
+/** Sawtooth wave low-frequency oscillator.
+ *
+ * It looks like this: `╱│╱│╱│╱│`.
+ */
+@final
+export class SawtoothModulator implements Modulator {
+  private period: Time;
+
+  constructor(p: Time) {
+    this.period = p;
+  }
+
+  static new(period: Time): SawtoothModulator {
+    return new SawtoothModulator(period);
+  }
+
+  modulate(nodeId: u32, param: u32, low: f32, high: f32) {
+    B.mod_sawtooth(nodeId, param, low, high, this.period._s);
   }
 }
 
