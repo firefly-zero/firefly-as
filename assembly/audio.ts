@@ -13,6 +13,146 @@ export class Freq {
   static hz(hz: f32): Freq {
     return new Freq(hz);
   }
+
+  // TODO(@orsinium): For some reason, AS compiler defines a global variable
+  // for every constant below and wasmopt keeps it. This adds 3kb to every binary
+  // that imports audio (20 bytes each constant). The same is if these are defined
+  // as global constants instead of static fields on class. Find a way to fix it.
+
+  static readonly ZERO: Freq = new Freq(0);
+
+  /** C0, MIDI note #12 */
+  static readonly C0: Freq = new Freq(16.351);
+  static readonly CS0: Freq = new Freq(17.324);
+  static readonly D0: Freq = new Freq(18.354);
+  static readonly DS0: Freq = new Freq(19.445);
+  static readonly E0: Freq = new Freq(20.601);
+  static readonly F0: Freq = new Freq(21.827);
+  static readonly FS0: Freq = new Freq(23.124);
+  static readonly G0: Freq = new Freq(24.499);
+  static readonly GS0: Freq = new Freq(25.956);
+  /** A0, the lowest note of a piano */
+  static readonly A0: Freq = new Freq(27.5);
+  static readonly AS0: Freq = new Freq(29.135);
+  /** B0, the lowest note of a 5 string bass */
+  static readonly B0: Freq = new Freq(30.868);
+  /** C1, the lowest note of double bass with C extension */
+  static readonly C1: Freq = new Freq(32.703);
+  static readonly CS1: Freq = new Freq(34.648);
+  static readonly D1: Freq = new Freq(36.708);
+  static readonly DS1: Freq = new Freq(38.891);
+  /** E1, the lowest note of a bass */
+  static readonly E1: Freq = new Freq(41.203);
+  static readonly F1: Freq = new Freq(43.654);
+  static readonly FS1: Freq = new Freq(46.249);
+  static readonly G1: Freq = new Freq(48.999);
+  static readonly GS1: Freq = new Freq(51.913);
+  static readonly A1: Freq = new Freq(55);
+  static readonly AS1: Freq = new Freq(58.27);
+  static readonly B1: Freq = new Freq(61.735);
+  static readonly C2: Freq = new Freq(65.406);
+  static readonly CS2: Freq = new Freq(69.296);
+  static readonly D2: Freq = new Freq(73.416);
+  static readonly DS2: Freq = new Freq(77.782);
+  /** E2, the lowest note of a guitar. */
+  static readonly E2: Freq = new Freq(82.407);
+  static readonly F2: Freq = new Freq(87.307);
+  static readonly FS2: Freq = new Freq(92.499);
+  static readonly G2: Freq = new Freq(97.999);
+  static readonly GS2: Freq = new Freq(103.826);
+  static readonly A2: Freq = new Freq(110);
+  static readonly AS2: Freq = new Freq(116.541);
+  static readonly B2: Freq = new Freq(123.471);
+  static readonly C3: Freq = new Freq(130.813);
+  static readonly CS3: Freq = new Freq(138.591);
+  static readonly D3: Freq = new Freq(146.832);
+  static readonly DS3: Freq = new Freq(155.563);
+  static readonly E3: Freq = new Freq(164.814);
+  static readonly F3: Freq = new Freq(174.614);
+  static readonly FS3: Freq = new Freq(184.997);
+  /** G3, the lowest note of a violin. */
+  static readonly G3: Freq = new Freq(195.998);
+  static readonly GS3: Freq = new Freq(207.652);
+  static readonly A3: Freq = new Freq(220);
+  static readonly AS3: Freq = new Freq(233.082);
+  static readonly B3: Freq = new Freq(246.942);
+  /** C4, the "middle C". */
+  static readonly C4: Freq = new Freq(261.626);
+  static readonly CS4: Freq = new Freq(277.183);
+  static readonly D4: Freq = new Freq(293.665);
+  static readonly DS4: Freq = new Freq(311.127);
+  static readonly E4: Freq = new Freq(329.628);
+  static readonly F4: Freq = new Freq(349.228);
+  static readonly FS4: Freq = new Freq(369.994);
+  static readonly G4: Freq = new Freq(391.995);
+  static readonly GS4: Freq = new Freq(415.305);
+  /** A4, the tuning reference note. */
+  static readonly A4: Freq = new Freq(440);
+  static readonly AS4: Freq = new Freq(466.164);
+  static readonly B4: Freq = new Freq(493.883);
+  static readonly C5: Freq = new Freq(523.251);
+  static readonly CS5: Freq = new Freq(554.365);
+  static readonly D5: Freq = new Freq(587.33);
+  static readonly DS5: Freq = new Freq(622.254);
+  static readonly E5: Freq = new Freq(659.255);
+  static readonly F5: Freq = new Freq(698.456);
+  static readonly FS5: Freq = new Freq(739.989);
+  static readonly G5: Freq = new Freq(783.991);
+  static readonly GS5: Freq = new Freq(830.609);
+  static readonly A5: Freq = new Freq(880);
+  static readonly AS5: Freq = new Freq(932.328);
+  static readonly B5: Freq = new Freq(987.767);
+  static readonly C6: Freq = new Freq(1046.502);
+  static readonly CS6: Freq = new Freq(1108.731);
+  static readonly D6: Freq = new Freq(1174.659);
+  static readonly DS6: Freq = new Freq(1244.508);
+  static readonly E6: Freq = new Freq(1318.51);
+  static readonly F6: Freq = new Freq(1396.913);
+  static readonly FS6: Freq = new Freq(1479.978);
+  static readonly G6: Freq = new Freq(1567.982);
+  static readonly GS6: Freq = new Freq(1661.219);
+  static readonly A6: Freq = new Freq(1760);
+  static readonly AS6: Freq = new Freq(1864.655);
+  static readonly B6: Freq = new Freq(1975.533);
+  static readonly C7: Freq = new Freq(2093.005);
+  static readonly CS7: Freq = new Freq(2217.461);
+  static readonly D7: Freq = new Freq(2349.318);
+  static readonly DS7: Freq = new Freq(2489.016);
+  static readonly E7: Freq = new Freq(2637.021);
+  static readonly F7: Freq = new Freq(2793.826);
+  static readonly FS7: Freq = new Freq(2959.955);
+  static readonly G7: Freq = new Freq(3135.964);
+  static readonly GS7: Freq = new Freq(3322.438);
+  static readonly A7: Freq = new Freq(3520);
+  static readonly AS7: Freq = new Freq(3729.31);
+  static readonly B7: Freq = new Freq(3951.066);
+  /** C8, the highest note of a piano. */
+  static readonly C8: Freq = new Freq(4186.009);
+  static readonly CS8: Freq = new Freq(4434.922);
+  static readonly D8: Freq = new Freq(4698.636);
+  static readonly DS8: Freq = new Freq(4978.032);
+  static readonly E8: Freq = new Freq(5274.042);
+  static readonly F8: Freq = new Freq(5587.652);
+  static readonly FS8: Freq = new Freq(5919.91);
+  static readonly G8: Freq = new Freq(6271.928);
+  static readonly GS8: Freq = new Freq(6644.876);
+  static readonly A8: Freq = new Freq(7040);
+  static readonly AS8: Freq = new Freq(7458.62);
+  static readonly B8: Freq = new Freq(7902.132);
+  static readonly C9: Freq = new Freq(8372.018);
+  static readonly CS9: Freq = new Freq(8869.844);
+  static readonly D9: Freq = new Freq(9397.272);
+  static readonly DS9: Freq = new Freq(9956.064);
+  static readonly E9: Freq = new Freq(10548.084);
+  static readonly F9: Freq = new Freq(11175.304);
+  static readonly FS9: Freq = new Freq(11839.82);
+  static readonly G9: Freq = new Freq(12543.856);
+  /** G#9, MIDI note #128, the top of the MIDI tuning range. */
+  static readonly GS9: Freq = new Freq(13289.752);
+  static readonly A9: Freq = new Freq(14080);
+  static readonly AS9: Freq = new Freq(14917.24);
+  /** B9. For most of adults, it is already beyond the hearing range. */
+  static readonly B9: Freq = new Freq(15804.264);
 }
 
 export class Time {

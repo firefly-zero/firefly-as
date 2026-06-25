@@ -5,5 +5,5 @@ export function boot(): void {
   const gain = audio.OUT.addGain(1);
   const mod = audio.SineModulator.new(audio.Freq.hz(0.5));
   gain.modulate(0, 1, mod);
-  gain.addSine(audio.Freq.hz(440), 0);
+  gain.addSine(audio.Freq.A4, 0);
 }
