@@ -103,7 +103,7 @@ export class HoldModulator implements Modulator {
     return new HoldModulator(time);
   }
 
-  modulate(nodeId: u32, param: u32, low: f32, high: f32) {
+  modulate(nodeId: u32, param: u32, low: f32, high: f32): void {
     B.mod_hold(nodeId, param, low, high, this.time._s);
   }
 }
@@ -151,7 +151,7 @@ export class AdsrModulator implements Modulator {
     return new AdsrModulator(attack, decay, sustain, sustain_level, release);
   }
 
-  modulate(nodeId: u32, param: u32, low: f32, high: f32) {
+  modulate(nodeId: u32, param: u32, low: f32, high: f32): void {
     B.mod_adsr(
       nodeId,
       param,
@@ -185,7 +185,7 @@ export class SineModulator implements Modulator {
     return new SineModulator(f);
   }
 
-  modulate(nodeId: u32, param: u32, low: f32, high: f32) {
+  modulate(nodeId: u32, param: u32, low: f32, high: f32): void {
     B.mod_sine(nodeId, param, this.freq._h, low, high);
   }
 }
@@ -206,7 +206,7 @@ export class SquareModulator implements Modulator {
     return new SquareModulator(period);
   }
 
-  modulate(nodeId: u32, param: u32, low: f32, high: f32) {
+  modulate(nodeId: u32, param: u32, low: f32, high: f32): void {
     B.mod_square(nodeId, param, low, high, this.period._s);
   }
 }
@@ -227,7 +227,7 @@ export class SawtoothModulator implements Modulator {
     return new SawtoothModulator(period);
   }
 
-  modulate(nodeId: u32, param: u32, low: f32, high: f32) {
+  modulate(nodeId: u32, param: u32, low: f32, high: f32): void {
     B.mod_sawtooth(nodeId, param, low, high, this.period._s);
   }
 }
@@ -401,56 +401,125 @@ export class Node extends SourceNode {
 }
 
 @final
-export class Sine extends SourceNode {}
+export class Sine extends SourceNode {
+  modulate(low: Freq, high: Freq, mod: Modulator): void {
+    mod.modulate(this.id, 0, low._h, high._h);
+  }
+}
+
 @final
-export class Square extends SourceNode {}
+export class Square extends SourceNode {
+  modulate(low: Freq, high: Freq, mod: Modulator): void {
+    mod.modulate(this.id, 0, low._h, high._h);
+  }
+}
+
 @final
-export class Sawtooth extends SourceNode {}
+export class Sawtooth extends SourceNode {
+  modulate(low: Freq, high: Freq, mod: Modulator): void {
+    mod.modulate(this.id, 0, low._h, high._h);
+  }
+}
+
 @final
-export class Triangle extends SourceNode {}
+export class Triangle extends SourceNode {
+  modulate(low: Freq, high: Freq, mod: Modulator): void {
+    mod.modulate(this.id, 0, low._h, high._h);
+  }
+}
+
 @final
 export class Noise extends SourceNode {}
+
 @final
 export class Empty extends SourceNode {}
+
 @final
 export class Zero extends SourceNode {}
+
 @final
 export class File extends SourceNode {}
 
 @final
 export class Mix extends Node {}
+
 @final
 export class AllForOne extends Node {}
+
 @final
 export class Gain extends Node {
   modulate(low: f32, high: f32, mod: Modulator): void {
     mod.modulate(this.id, 0, low, high);
   }
 }
+
 @final
 export class Loop extends Node {}
+
 @final
 export class Concat extends Node {}
+
 @final
-export class Pan extends Node {}
+export class Pan extends Node {
+  modulate(low: f32, high: f32, mod: Modulator): void {
+    mod.modulate(this.id, 0, low, high);
+  }
+}
+
 @final
-export class Mute extends Node {}
+export class Mute extends Node {
+  modulate(low: f32, high: f32, mod: Modulator): void {
+    mod.modulate(this.id, 0, low, high);
+  }
+}
+
 @final
-export class Pause extends Node {}
+export class Pause extends Node {
+  modulate(low: f32, high: f32, mod: Modulator): void {
+    mod.modulate(this.id, 0, low, high);
+  }
+}
+
 @final
 export class TrackPosition extends Node {}
+
 @final
-export class LowPass extends Node {}
+export class LowPass extends Node {
+  modulateFreq(low: Freq, high: Freq, mod: Modulator): void {
+    mod.modulate(this.id, 0, low._h, high._h);
+  }
+}
+
 @final
-export class HighPass extends Node {}
+export class HighPass extends Node {
+  modulateFreq(low: Freq, high: Freq, mod: Modulator): void {
+    mod.modulate(this.id, 0, low._h, high._h);
+  }
+}
+
 @final
 export class TakeLeft extends Node {}
+
 @final
 export class TakeRight extends Node {}
+
 @final
 export class Swap extends Node {}
+
 @final
-export class Clip extends Node {}
+export class Clip extends Node {
+  modulateBoth(low: f32, high: f32, mod: Modulator): void {
+    mod.modulate(this.id, 0, low, high);
+  }
+
+  modulateLow(low: f32, high: f32, mod: Modulator): void {
+    mod.modulate(this.id, 1, low, high);
+  }
+
+  modulateHigh(low: f32, high: f32, mod: Modulator): void {
+    mod.modulate(this.id, 2, low, high);
+  }
+}
 
 @final
 class Out extends Node {}
