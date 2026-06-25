@@ -1,5 +1,5 @@
-import * as B from "./bindings";
-import { strAddr, strSize, toUtf8 } from "./memory";
+import * as B from "./_bindings";
+import { strAddr, strSize, toUtf8 } from "./_memory";
 
 export function addMenuItem(index: u32, text: string): void {
   const utf8 = toUtf8(text);

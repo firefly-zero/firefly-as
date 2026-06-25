@@ -1,0 +1,9 @@
+{
+  "type": "module",
+  "dependencies": {
+    "firefly-as": "file:../../"
+  },
+  "devDependencies": {
+    "assemblyscript": "^0.28.19"
+  }
+}

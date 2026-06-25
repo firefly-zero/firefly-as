@@ -1,6 +1,6 @@
-import * as B from "./bindings";
-import { File } from "./fs";
-import { strAddr, strSize, toUtf8 } from "./memory";
+import * as B from "./_bindings";
+import { File } from "./_fs";
+import { strAddr, strSize, toUtf8 } from "./_memory";
 
 export enum Color {
   /** No color (100% transparency). */
@@ -39,6 +39,7 @@ export enum Color {
   DarkGray = 16,
 }
 
+@final
 export class RGB {
   r: i8;
   g: i8;
@@ -55,6 +56,7 @@ export class RGB {
   }
 }
 
+@final
 export class Point {
   x: i32;
   y: i32;
@@ -69,6 +71,7 @@ export class Point {
   }
 }
 
+@final
 export class LineStyle {
   color: Color;
   width: i32;
@@ -83,15 +86,16 @@ export class LineStyle {
   }
 }
 
+@final
 export class Style {
-  fill_color: Color;
-  stroke_color: Color;
-  stroke_width: i32;
+  fillColor: Color;
+  strokeColor: Color;
+  strokeWidth: i32;
 
   constructor(fc: Color, sc: Color, w: i32) {
-    this.fill_color = fc;
-    this.stroke_color = sc;
-    this.stroke_width = w;
+    this.fillColor = fc;
+    this.strokeColor = sc;
+    this.strokeWidth = w;
   }
 
   /** Create a shape style filled with a color and without a stroke. */
@@ -104,11 +108,12 @@ export class Style {
     return new Style(Color.None, c, w);
   }
 
-  static new(fill: Color, stroke: Color, stroke_width: i32): Style {
-    return new Style(fill, stroke, stroke_width);
+  static new(fill: Color, stroke: Color, strokeWidth: i32): Style {
+    return new Style(fill, stroke, strokeWidth);
   }
 }
 
+@final
 export class Size {
   width: i32;
   height: i32;
@@ -123,6 +128,7 @@ export class Size {
   }
 }
 
+@final
 export class Angle {
   private r: f32;
 
@@ -150,6 +156,7 @@ export class Angle {
   }
 }
 
+@final
 export class Image {
   readonly _raw: ArrayBuffer;
 
@@ -166,6 +173,7 @@ export class Image {
   }
 }
 
+@final
 export class SubImage {
   readonly _raw: ArrayBuffer;
   point: Point;
@@ -178,6 +186,7 @@ export class SubImage {
   }
 }
 
+@final
 export class Font {
   readonly _raw: ArrayBuffer;
 
@@ -190,6 +199,7 @@ export class Font {
   }
 }
 
+@final
 export class Canvas {
   private readonly _raw: ArrayBuffer;
 
@@ -239,7 +249,7 @@ export function drawLine(a: Point, b: Point, s: LineStyle): void {
 
 /** Draw a rectangle filling the given bounding box. */
 export function drawRect(p: Point, b: Size, s: Style): void {
-  B.draw_rect(p.x, p.y, b.width, b.height, s.fill_color, s.stroke_color, s.stroke_width);
+  B.draw_rect(p.x, p.y, b.width, b.height, s.fillColor, s.strokeColor, s.strokeWidth);
 }
 
 /** Draw a rectangle with rounded corners. */
@@ -251,28 +261,20 @@ export function drawRoundedRect(p: Point, b: Size, corner: Size, s: Style): void
     b.height,
     corner.width,
     corner.height,
-    s.fill_color,
-    s.stroke_color,
-    s.stroke_width,
+    s.fillColor,
+    s.strokeColor,
+    s.strokeWidth,
   );
 }
 
 /** Draw a circle with the given diameter. */
 export function drawCircle(p: Point, d: i32, s: Style): void {
-  B.draw_circle(p.x, p.y, d, s.fill_color, s.stroke_color, s.stroke_width);
+  B.draw_circle(p.x, p.y, d, s.fillColor, s.strokeColor, s.strokeWidth);
 }
 
 /** Draw an ellipse (oval). */
 export function drawEllipse(p: Point, b: Size, s: Style): void {
-  B.draw_ellipse(
-    p.x,
-    p.y,
-    b.width,
-    b.height,
-    s.fill_color,
-    s.stroke_color,
-    s.stroke_width,
-  );
+  B.draw_ellipse(p.x, p.y, b.width, b.height, s.fillColor, s.strokeColor, s.strokeWidth);
 }
 
 /** Draw a triangle. */
@@ -284,9 +286,9 @@ export function drawTriangle(a: Point, b: Point, c: Point, s: Style): void {
     b.y,
     c.x,
     c.y,
-    s.fill_color,
-    s.stroke_color,
-    s.stroke_width,
+    s.fillColor,
+    s.strokeColor,
+    s.strokeWidth,
   );
 }
 
@@ -298,9 +300,9 @@ export function drawArc(p: Point, d: i32, start: Angle, sweep: Angle, s: Style):
     d,
     start.radians(),
     sweep.radians(),
-    s.fill_color,
-    s.stroke_color,
-    s.stroke_width,
+    s.fillColor,
+    s.strokeColor,
+    s.strokeWidth,
   );
 }
 
@@ -312,9 +314,9 @@ export function drawSector(p: Point, d: i32, start: Angle, sweep: Angle, s: Styl
     d,
     start.radians(),
     sweep.radians(),
-    s.fill_color,
-    s.stroke_color,
-    s.stroke_width,
+    s.fillColor,
+    s.strokeColor,
+    s.strokeWidth,
   );
 }
 

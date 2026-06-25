@@ -1,6 +1,7 @@
-import * as B from "./bindings";
-import { strAddr, strSize } from "./memory";
+import * as B from "./_bindings";
+import { strAddr, strSize } from "./_memory";
 
+@final
 export class Peer {
   readonly _raw: u8;
 
@@ -13,6 +14,7 @@ export class Peer {
   }
 }
 
+@final
 export class Peers {
   private readonly _raw: u32;
 

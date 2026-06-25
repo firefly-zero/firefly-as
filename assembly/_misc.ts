@@ -1,7 +1,7 @@
-import * as B from "./bindings";
-import { toUtf8, strAddr, strSize, fromUtf8 } from "./memory";
-import { Peer } from "./net";
-import { Color } from "./graphics";
+import * as B from "./_bindings";
+import { toUtf8, strAddr, strSize, fromUtf8 } from "./_memory";
+import { Peer } from "./_net";
+import { Color } from "./_graphics";
 
 export enum Language {
   /** en 🇬🇧 💂 */
@@ -32,6 +32,7 @@ export enum Language {
   TokiPona = 0x7470,
 }
 
+@final
 export class Theme {
   readonly id: u8;
   /** The main color of text and boxes. */
@@ -52,6 +53,7 @@ export class Theme {
   }
 }
 
+@final
 export class Settings {
   /** The preferred color scheme of the player. */
   readonly theme: Theme;
