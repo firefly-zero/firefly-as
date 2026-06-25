@@ -405,12 +405,20 @@ export class Sine extends SourceNode {
   modulate(low: Freq, high: Freq, mod: Modulator): void {
     mod.modulate(this.id, 0, low._h, high._h);
   }
+
+  set(val: Freq): void {
+    B.set_param(this.id, 0, val._h);
+  }
 }
 
 @final
 export class Square extends SourceNode {
   modulate(low: Freq, high: Freq, mod: Modulator): void {
     mod.modulate(this.id, 0, low._h, high._h);
+  }
+
+  set(val: Freq): void {
+    B.set_param(this.id, 0, val._h);
   }
 }
 
@@ -419,12 +427,20 @@ export class Sawtooth extends SourceNode {
   modulate(low: Freq, high: Freq, mod: Modulator): void {
     mod.modulate(this.id, 0, low._h, high._h);
   }
+
+  set(val: Freq): void {
+    B.set_param(this.id, 0, val._h);
+  }
 }
 
 @final
 export class Triangle extends SourceNode {
   modulate(low: Freq, high: Freq, mod: Modulator): void {
     mod.modulate(this.id, 0, low._h, high._h);
+  }
+
+  set(val: Freq): void {
+    B.set_param(this.id, 0, val._h);
   }
 }
 
@@ -438,7 +454,11 @@ export class Empty extends SourceNode {}
 export class Zero extends SourceNode {}
 
 @final
-export class File extends SourceNode {}
+export class File extends SourceNode {
+  seek(val: Time): void {
+    B.set_param(this.id, 0, val._s);
+  }
+}
 
 @final
 export class Mix extends Node {}
@@ -450,6 +470,10 @@ export class AllForOne extends Node {}
 export class Gain extends Node {
   modulate(low: f32, high: f32, mod: Modulator): void {
     mod.modulate(this.id, 0, low, high);
+  }
+
+  set(val: f32): void {
+    B.set_param(this.id, 0, val);
   }
 }
 
@@ -464,6 +488,10 @@ export class Pan extends Node {
   modulate(low: f32, high: f32, mod: Modulator): void {
     mod.modulate(this.id, 0, low, high);
   }
+
+  set(val: f32): void {
+    B.set_param(this.id, 0, val);
+  }
 }
 
 @final
@@ -471,12 +499,28 @@ export class Mute extends Node {
   modulate(low: f32, high: f32, mod: Modulator): void {
     mod.modulate(this.id, 0, low, high);
   }
+
+  mute(): void {
+    B.set_param(this.id, 0, 0);
+  }
+
+  unmute(): void {
+    B.set_param(this.id, 0, 1);
+  }
 }
 
 @final
 export class Pause extends Node {
   modulate(low: f32, high: f32, mod: Modulator): void {
     mod.modulate(this.id, 0, low, high);
+  }
+
+  pause(): void {
+    B.set_param(this.id, 0, 0);
+  }
+
+  play(): void {
+    B.set_param(this.id, 0, 1);
   }
 }
 
@@ -488,12 +532,20 @@ export class LowPass extends Node {
   modulateFreq(low: Freq, high: Freq, mod: Modulator): void {
     mod.modulate(this.id, 0, low._h, high._h);
   }
+
+  setFreq(val: Freq): void {
+    B.set_param(this.id, 0, val._h);
+  }
 }
 
 @final
 export class HighPass extends Node {
   modulateFreq(low: Freq, high: Freq, mod: Modulator): void {
     mod.modulate(this.id, 0, low._h, high._h);
+  }
+
+  setFreq(val: Freq): void {
+    B.set_param(this.id, 0, val._h);
   }
 }
 
@@ -512,12 +564,24 @@ export class Clip extends Node {
     mod.modulate(this.id, 0, low, high);
   }
 
+  setBoth(val: f32): void {
+    B.set_param(this.id, 0, val);
+  }
+
   modulateLow(low: f32, high: f32, mod: Modulator): void {
     mod.modulate(this.id, 1, low, high);
   }
 
+  setLow(val: f32): void {
+    B.set_param(this.id, 1, val);
+  }
+
   modulateHigh(low: f32, high: f32, mod: Modulator): void {
     mod.modulate(this.id, 2, low, high);
+  }
+
+  setHigh(val: f32): void {
+    B.set_param(this.id, 2, val);
   }
 }
 
