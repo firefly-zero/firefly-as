@@ -1,6 +1,6 @@
 {
   "name": "firefly-as",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "author": "Firefly Zero",
   "license": "MIT",
@@ -12,6 +12,6 @@
   },
   "description": "AssemblyScript SDK for making Firefly Zero games",
   "devDependencies": {
-    "assemblyscript": "^0.28.9"
+    "assemblyscript": "^0.28.19"
   }
 }
