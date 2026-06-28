@@ -142,6 +142,36 @@ export declare function draw_sub_image(
 ): void
 
 // @ts-ignore: decorator
+@external("graphics", "draw_sub_tile")
+export declare function draw_sub_tile(
+    ptr: usize,
+    len: usize,
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
+    sub_x: i32,
+    sub_y: i32,
+    sub_width: i32,
+    sub_height: i32,
+): void
+
+// @ts-ignore: decorator
+@external("graphics", "draw_nine_slice")
+export declare function draw_nine_slice(
+    ptr: usize,
+    len: usize,
+    x: i32,
+    y: i32,
+    w: i32,
+    h: i32,
+    sub_x: i32,
+    sub_y: i32,
+    sub_width: i32,
+    sub_height: i32,
+): void
+
+// @ts-ignore: decorator
 @external("graphics", "draw_image")
 export declare function draw_image(ptr: usize, len: usize, x: i32, y: i32): void
 

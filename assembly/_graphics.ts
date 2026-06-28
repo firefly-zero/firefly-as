@@ -352,6 +352,36 @@ export function drawSubImage(i: SubImage, p: Point): void {
   );
 }
 
+export function drawSubTile(i: SubImage, p: Point, s: Size): void {
+  B.draw_sub_tile(
+    strAddr(i._raw),
+    strSize(i._raw),
+    p.x,
+    p.y,
+    s.width,
+    s.height,
+    i.point.x,
+    i.point.y,
+    i.size.width,
+    i.size.height,
+  );
+}
+
+export function drawNineSlice(i: SubImage, p: Point, s: Size): void {
+  B.draw_nine_slice(
+    strAddr(i._raw),
+    strSize(i._raw),
+    p.x,
+    p.y,
+    s.width,
+    s.height,
+    i.point.x,
+    i.point.y,
+    i.size.width,
+    i.size.height,
+  );
+}
+
 /** Render a QR code for the given text. */
 export function drawQr(t: string, p: Point, black: Color, white: Color): void {
   let utf8 = toUtf8(t);
