@@ -95,21 +95,21 @@ export class Settings {
 
 @final
 export class Duration {
-  private readonly us: u64;
+  private readonly us: i64;
 
-  constructor(us_: u64) {
+  constructor(us_: i64) {
     this.us = us_;
   }
 
-  static fromMicroseconds(us_: u64): Duration {
+  static fromMicroseconds(us_: i64): Duration {
     return new Duration(us_);
   }
 
-  static fromMilliseconds(ms: u64): Duration {
+  static fromMilliseconds(ms: i64): Duration {
     return new Duration(ms * 1000);
   }
 
-  static fromSeconds(ms: u64): Duration {
+  static fromSeconds(ms: i64): Duration {
     return new Duration(ms * 1_000_000);
   }
 

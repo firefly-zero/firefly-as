@@ -274,7 +274,7 @@ export declare function get_random() : u32;
 
 // @ts-ignore: decorator
 @external("misc", "get_time")
-export declare function get_time() : u64;
+export declare function get_time() : i64;
 
 // @ts-ignore: decorator
 @external("misc", "get_name")
