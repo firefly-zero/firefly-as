@@ -93,6 +93,82 @@ export class Settings {
   }
 }
 
+@final
+export class Duration {
+  private readonly us: u64;
+
+  constructor(us_: u64) {
+    this.us = us_;
+  }
+
+  static fromMicroseconds(us_: u64): Duration {
+    return new Duration(us_);
+  }
+
+  static fromMilliseconds(ms: u64): Duration {
+    return new Duration(ms * 1000);
+  }
+
+  static fromSeconds(ms: u64): Duration {
+    return new Duration(ms * 1_000_000);
+  }
+
+  @operator("<")
+  __lt(rhs: Duration): bool {
+    return this.us < rhs.us;
+  }
+
+  @operator("<=")
+  __le(rhs: Duration): bool {
+    return this.us <= rhs.us;
+  }
+
+  @operator(">")
+  __gt(rhs: Duration): bool {
+    return this.us > rhs.us;
+  }
+
+  @operator(">=")
+  __ge(rhs: Duration): bool {
+    return this.us >= rhs.us;
+  }
+
+  @operator("==")
+  __eq(rhs: Duration): bool {
+    return this.us == rhs.us;
+  }
+
+  @operator("!=")
+  __ne(rhs: Duration): bool {
+    return this.us == rhs.us;
+  }
+
+  @operator("+")
+  __add(rhs: Duration): Duration {
+    return new Duration(this.us + rhs.us);
+  }
+
+  @operator("-")
+  __sub(rhs: Duration): Duration {
+    return new Duration(this.us - rhs.us);
+  }
+
+  /** The duration as an integer microsecond count.  */
+  microseconds(): i64 {
+    return this.us;
+  }
+
+  /** The duration as an integer millisecond count.  */
+  milliseconds(): i64 {
+    return this.microseconds() / 1000;
+  }
+
+  /** The duration as an integer second count.  */
+  seconds(): i64 {
+    return this.milliseconds() / 1000;
+  }
+}
+
 export function logDebug(t: string): void {
   const utf8 = toUtf8(t);
   B.log_debug(strAddr(utf8), strSize(utf8));
@@ -109,6 +185,10 @@ export function setSeed(s: u32): void {
 
 export function getRandom(): u32 {
   return B.get_random();
+}
+
+export function getTime(): Duration {
+  return new Duration(B.get_time());
 }
 
 export function getName(peer: Peer): string {
