@@ -273,6 +273,10 @@ export declare function set_seed(seed: u32): void;
 export declare function get_random() : u32;
 
 // @ts-ignore: decorator
+@external("misc", "get_time")
+export declare function get_time() : u64;
+
+// @ts-ignore: decorator
 @external("misc", "get_name")
 export declare function get_name(idx: u32, ptr: usize) : u32;
 
