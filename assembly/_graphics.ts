@@ -164,6 +164,30 @@ export class Image {
     this._raw = raw;
   }
 
+  /** Create a new empty image of the given size.
+   *
+   * The given color is used as the transparency color.
+   * if [Color.None] is given, then the image will not have transparency
+   * and it will be filled with [Color.Black] by default.
+   *
+   * Use [setCanvas] (or [withCanvas]) and the drawing functions
+   * to fill the newly created image.
+   */
+  static new(s: Size, transp: Color): Image {
+    const headerSize = 4;
+    const bodySize = (s.width * s.height) / 2;
+    const raw = new Uint8Array(headerSize + bodySize);
+    const t = transp - 1;
+    raw[0] = 0x22; // magic number
+    raw[1] = u8(s.width); // width
+    raw[2] = u8(s.width >> 8); // width
+    raw[3] = t; // transparency
+    for (let i = 4; i < raw.length; i++) {
+      raw[i] = t;
+    }
+    return new Image(raw);
+  }
+
   static fromFile(file: File): Image {
     return new Image(file.toArrayBuffer());
   }
@@ -196,34 +220,6 @@ export class Font {
 
   static fromFile(file: File): Font {
     return new Font(file.toArrayBuffer());
-  }
-}
-
-@final
-export class Canvas {
-  private readonly _raw: ArrayBuffer;
-
-  constructor(s: Size) {
-    const headerSize = 4;
-    const bodySize = (s.width * s.height) / 2;
-    const raw = new Uint8Array(headerSize + bodySize);
-    raw[0] = 0x22; // magic number
-    raw[1] = u8(s.width); // width
-    raw[2] = u8(s.width >> 8); // width
-    raw[3] = 0xff; // transparency
-    this._raw = raw;
-  }
-
-  static new(s: Size): Canvas {
-    return new Canvas(s);
-  }
-
-  toArrayBuffer(): ArrayBuffer {
-    return this._raw;
-  }
-
-  toImage(): Image {
-    return new Image(this._raw);
   }
 }
 
@@ -389,14 +385,13 @@ export function drawQr(t: string, p: Point, black: Color, white: Color): void {
 }
 
 /** Set the target image for all subsequent drawing operations. */
-export function setCanvas(c: Canvas): void {
-  const buf = c.toArrayBuffer();
-  B.set_canvas(strAddr(buf), strSize(buf));
+export function setCanvas(i: Image): void {
+  B.set_canvas(strAddr(i._raw), strSize(i._raw));
 }
 
 /** Make all subsequent drawing operations target the screen instead of a canvas.
  *
- * Cancels the effect of setCanvas.
+ * Cancels the effect of [setCanvas].
  */
 export function unsetCanvas(): void {
   B.unset_canvas();
