@@ -384,6 +384,13 @@ export function drawQr(t: string, p: Point, black: Color, white: Color): void {
   B.draw_qr(strAddr(utf8), strSize(utf8), p.x, p.y, black, white);
 }
 
+/** Run the function with all drawing operations being executed on the canvas. */
+export function withCanvas(i: Image, f: () => void): void {
+  setCanvas(i);
+  f();
+  unsetCanvas();
+}
+
 /** Set the target image for all subsequent drawing operations. */
 export function setCanvas(i: Image): void {
   B.set_canvas(strAddr(i._raw), strSize(i._raw));
