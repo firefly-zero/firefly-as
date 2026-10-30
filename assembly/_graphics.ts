@@ -182,8 +182,10 @@ export class Image {
     raw[1] = u8(s.width); // width
     raw[2] = u8(s.width >> 8); // width
     raw[3] = t; // transparency
-    for (let i = 4; i < raw.length; i++) {
-      raw[i] = t;
+    if (t != 255 && t != 0) {
+      for (let i = 4; i < raw.length; i++) {
+        raw[i] = t;
+      }
     }
     return new Image(raw);
   }
