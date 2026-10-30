@@ -1,5 +1,6 @@
 import * as B from "./_audio_bindings";
 import { toUtf8, strAddr, strSize } from "./_memory";
+import { getMe, Peer as NetPeer } from "./_net";
 
 export const SAMPLE_RATE = 44_100;
 
@@ -483,6 +484,17 @@ export class Node extends SourceNode {
     return new Pause(id);
   }
 
+  /** Add node that plays child nodes only on the device of the given peer. */
+  addPeer(p: NetPeer): Peer {
+    let id: u32;
+    if (getMe() == p) {
+      id = B.add_mix(this.id);
+    } else {
+      id = B.add_zero(this.id);
+    }
+    return new Peer(id);
+  }
+
   /** Add node tracking the elapsed playback time. */
   addTrackPosition(): TrackPosition {
     let id = B.add_track_position(this.id);
@@ -663,6 +675,9 @@ export class Pause extends Node {
     B.set_param(this.id, 0, 1);
   }
 }
+
+@final
+export class Peer extends Node {}
 
 @final
 export class TrackPosition extends Node {}
