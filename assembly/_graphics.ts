@@ -228,6 +228,22 @@ export function clearScreen(c: Color): void {
   B.clear_screen(c);
 }
 
+/** Horizontally flip the image currently rendered on the screen.
+ *
+ * Most commonly used together with [setCanvas] to flip images (sprites).
+ */
+export function flipX(): void {
+  B.flip_x();
+}
+
+/** Vertically flip the image currently rendered on the screen.
+ *
+ * Most commonly used together with [setCanvas] to flip images (sprites).
+ */
+export function flipY(): void {
+  B.flip_y();
+}
+
 /** Set a color value in the palette. */
 export function setColor(c: Color, v: RGB): void {
   B.set_color(c, v.r, v.g, v.b);

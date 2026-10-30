@@ -5,6 +5,14 @@
 export declare function clear_screen(color: i32): void
 
 // @ts-ignore: decorator
+@external("graphics", "flip_x")
+export declare function flip_x(): void
+
+// @ts-ignore: decorator
+@external("graphics", "flip_y")
+export declare function flip_y(): void
+
+// @ts-ignore: decorator
 @external("graphics", "set_color")
 export declare function set_color(index: i32, r: i32, g: i32, b: i32): void
 
