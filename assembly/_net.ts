@@ -31,7 +31,7 @@ export class Peers {
   }
 
   toArray(): Peer[] {
-    const res = [];
+    const res: Peer[] = [];
     for (let rawPeer = 0; rawPeer < 32; rawPeer++) {
       let peer = new Peer(rawPeer);
       if (this.contains(peer)) {
